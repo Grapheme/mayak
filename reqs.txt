@@ -1,5 +1,5 @@
 django-admin-tools==0.5.1
-django-constance[database]
+django-constance[database]==0.6
 django-mptt==0.5.5
 django<1.5
 grab
@@ -8,3 +8,4 @@ pytils
 South==0.7.6
 pillow
 django-ckeditor
+django-tinymce==1.5.1b4
