@@ -1,0 +1,10 @@
+django-admin-tools==0.5.1
+django-constance[database]
+django-mptt==0.5.5
+django<1.5
+grab
+lxml
+pytils
+South==0.7.6
+pillow
+django-ckeditor

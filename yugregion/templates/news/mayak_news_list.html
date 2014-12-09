@@ -1,0 +1,141 @@
+{% extends "mayak_layout.html" %}
+
+{% load thumbnails static %}
+
+
+{% block preheadjs %}
+	<link rel="stylesheet" href="{% static 'css/jquery.datapiker.css' %}">
+{% endblock %}
+
+{% block headjs %}
+	<script src="{% static 'js/jquery-ui.js' %}"></script>
+	<script type="text/javascript" >
+		$.datepicker.regional['ru'] = {
+			closeText: 'Закрыть',
+			prevText: '&#x3c;Пред',
+			nextText: 'След&#x3e;',
+			currentText: 'Сегодня',
+			monthNames: ['Январь','Февраль','Март','Апрель','Май','Июнь', 'Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'],
+			monthNamesShort: ['Янв','Фев','Мар','Апр','Май','Июн', 'Июл','Авг','Сен','Окт','Ноя','Дек'],
+			dayNames: ['воскресенье','понедельник','вторник','среда','четверг','пятница','суббота'],
+			dayNamesShort: ['вск','пнд','втр','срд','чтв','птн','сбт'],
+			dayNamesMin: ['Вс','Пн','Вт','Ср','Чт','Пт','Сб'],
+			weekHeader: 'Не',
+			dateFormat: 'dd.mm.yy',
+			firstDay: 1,
+			isRTL: false,
+			showMonthAfterYear: false,
+			yearSuffix: ''
+		};
+		$.datepicker.setDefaults($.datepicker.regional['ru']);
+
+		var links = { {% for day in news_day_list %}{% if not forloop.first %},{% endif %}"{{ day|date:'d.m.Y' }}": {"url":"{% url mayak_news_date_list day|date:'Y/m/d' %}"}{% endfor %} };
+
+		console.log(links);
+
+		function available(date) {
+			var values = [ date.getDate(), date.getMonth()+1 ];
+			for ( var id in values ) {values[ id ] = values[ id ].toString().replace( /^([0-9])$/, '0$1' );}
+			dmy = values[ 0 ]+'.'+values[ 1 ]+'.'+date.getFullYear()
+
+			if ( links[dmy] ){
+				return [true, "Available","Available"];
+			} else {
+				return [false,"unAvailable","unAvailable"];
+			}
+		}
+
+		function show_archive(date) {
+			if ( links[date] ) {
+				document.location.href = links[date]['url'];
+			}
+			return false
+		}
+
+		function get_new(year, month) {
+			date = month.toString().replace( /^([0-9])$/, '0$1' )+'.'+year;
+			$.ajax({
+				url: "{% url mayak_news_date_json %}",
+				data: { date:date },
+				type: "POST",
+				dataType: "json",
+				success: function(result){
+					for(var key in result) {links[key] = result[key]}
+				}
+			})
+		}
+
+		$(function() {
+			$( "#datepicker" ).datepicker({
+				changeYear: true,
+				minDate: "{{ minDate }}",
+				maxDate: "{{ maxDate }}",
+				defaultDate: "{{ defaultDate }}",
+				beforeShowDay: available,
+				onChangeMonthYear: get_new,
+				onSelect: show_archive
+			});
+		});
+	</script>
+{% endblock %}
+
+{% block body %}<div class="main-frame"><div class="content-holder">
+	<div class="content">
+		<div class="block_breadcrumbs" >{% for crumb in breadcrumbs %}<a class="breadcrumbs" href="{{ crumb.get_absolute_url }}">{{ crumb|safe }}</a>{% if not forloop.last %}&nbsp;&rarr;&nbsp;{% endif %}{% endfor %}&nbsp;&rarr;&nbsp;{{ current_node.title|safe }}</div>
+		<div class="article-box">
+			<h2>{{ current_root_node|safe }}</h2>
+
+			<ul id="shanson_news_list" >{% for news in news_list|slice:':2' %}<li{% cycle '' ' class="mr0" ' %}>
+				{% if news.photo %}<img src="{{ news.photo.path|thumbnail:"290x180,crop" }}" width="290" height="180" >{% endif %}
+				<h3>{{ news.title|safe }}</h3>
+				<p class="date">{{ news.date }}</p>
+				<hr class="date_hr" />
+				{% if news.anons %}<div class="anons" >{{ news.anons|safe }}</div>{% endif %}
+				<a href="{{ news.get_absolute_url }}" class="read_more" >Читать далее&gt;</a>
+			</li>{% endfor %}</ul>
+
+			<div class="scroll-pane horizontal-only"><div class="scroll-item-holder">
+				{% regroup news_list by date as date_list %}
+				{% for date in date_list %}<div class="scroll-item"><div class="news-box">
+					<div class="date-head"><div class="date-frame">{{ date.grouper }}</div></div>
+					<ul class="news-list">{% for news in date.list %}<li>
+						<div class="date">{{ news.time }}</div>
+						<div class="name"><a href="{{ news.get_absolute_url }}">{{ news.title }}</a></div>
+					</li>{% endfor %}</ul>
+				</div></div>{% endfor %}
+			</div></div>
+
+			<div class="pagination">
+				<br>
+				<span class="step-links">
+					{% if news_list.has_previous %}<a class="prev" href="{% url mayak_news_list_page news_list.previous_page_number %}">< Предыдущая</a>{% endif %}
+
+					<span class="current">
+						{% if news_list.number != 1 and news_list.previous_page_number != 1 %}<a href="{% url mayak_news_list_page 1 %}">1</a> &nbsp;&hellip;&nbsp; {% endif %}
+						{% if news_list.has_previous %}<a href="{% url mayak_news_list_page news_list.previous_page_number %}">{{ news_list.previous_page_number }}</a>{% endif %}
+						<span class="curent">{{ news_list.number }}</span>
+						{% if news_list.has_next %}<a href="{% url mayak_news_list_page news_list.next_page_number %}">{{ news_list.next_page_number }}</a>{% endif %}
+						{% if news_list.paginator.num_pages != news_list.number and news_list.next_page_number != news_list.paginator.num_pages %} &nbsp;&hellip;&nbsp; <a href="{% url mayak_news_list_page news_list.paginator.num_pages %}">{{ news_list.paginator.num_pages }}</a>{% endif %}
+					</span>
+
+					{% if news_list.has_next %}<a class="next" href="{% url mayak_news_list_page news_list.next_page_number %}">Следующая ></a>{% endif %}
+				</span>
+			</div>
+		</div>
+	</div>
+{% comment %}
+=================================
+Правые блоки и баннеры вижу тут я
+=================================
+{% endcomment %}
+	<div class="aside no-title news-aside">
+		<div id="datepicker" ></div>
+		{% if current_node.right_blocks.count %}{% for right_block in current_node.right_blocks.all %}<div class="aside-box">{% if right_block.photo %}
+			{% if right_block.url %}
+				<a href="{{ right_block.url }}" ><img src="{{ right_block.photo.url }}" alt="{{ right_block.description|safe|slice:"0:64" }}" /></a>
+			{% else %}
+				<img src="{{ right_block.photo.url }}" alt="{{ right_block.description|safe|slice:"0:64" }}" />
+			{% endif %}
+		{% endif %}</div>{% endfor %}{% endif %}
+	</div>
+</div><!--content-holder end--></div>{% endblock %}

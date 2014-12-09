@@ -1,0 +1,94 @@
+{% extends "shanson_layout.html" %}
+
+{% load static from staticfiles %}
+{% load thumbnails %}
+
+{% block headjs %}
+	<script type="text/javascript">$(function(){$('.scroll-pane').jScrollPane({horizontalDragMinWidth: 20});});</script>
+{% endblock %}
+
+{% block body %}
+	<div class="main-frame">
+		<div class="program-frame">
+			<div class="block_breadcrumbs" >{% for crumb in breadcrumbs %}<a class="breadcrumbs" href="{{ crumb.get_absolute_url }}">{{ crumb|safe }}</a>{% if not forloop.last %}&nbsp;&rarr;&nbsp;{% endif %}{% endfor %}&nbsp;&rarr;&nbsp;{{ current_node.title|safe }}</div>
+			<h2>{{ current_root_node.title|safe }}</h2>
+			<div class="content-holder">
+
+				{% include "includes/submenu.html" %}
+
+				<div class="content">
+					<div class="manager-list-holder">
+						<a href="#" class="talk">Напишите нам</a>
+						{% if manager_list|length >= 1 %}
+							<ul class="manager-list">
+								{% for manager in manager_list %}
+									<li>
+										{% if manager.photo %}
+											<div class="img-holder">
+												<img src="{{ manager.photo.path|thumbnail:"119x119" }}" width="119" height="119" alt="{{ manager.name_surname|safe }}" />
+											</div>
+										{% endif %}
+										<div class="text-holder">
+											<div class="name">{{ manager.name_surname|safe }}</div>
+											<div class="post">{{ manager.post }}</div>
+											{{ manager.text }}
+											<p>Тел. {{ manager.phone }}<br /><a href="mailto:{{ manager.email }}">{{ manager.email }}</a></p>
+										</div>
+									</li>
+								{% endfor %}
+							</ul>
+						{% endif %}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div><!--main-frame end-->
+{% endblock %}
+
+{% block popup %}
+	<div class="popup-holder" style="left:-9999px;" id="manager_connect_popup">
+		<div class="bg">&nbsp;</div>
+		<div class="popup send-form">
+			<div class="title">Напишите нам</div>
+			<a href="#" class="close"></a>
+			<form action="/shanson/manager_connect/" method="post" enctype="multipart/form-data" id="manager_connect_form">
+				{% include 'feedback/manager_connect_form.html' %}
+			</form>
+		</div>
+	</div>
+
+	<div class="popup-holder" style="left:-9999px;" id="manager_connect_done">
+		<div class="bg">&nbsp;</div>
+		<div class="popup text">
+			<div class="title">Напишите нам</div>
+			<a href="#" class="close"></a>
+			<div class="description">Спасибо! Ваше письмо отправлено.</div>
+			<p>Ждите, когда менеджер свяжется с вами.</p>
+		</div>
+	</div>
+{% endblock %}
+
+{% block jsfoot %}
+	<script type="text/javascript">
+		var options = {
+			target: "#manager_connect_form",
+			url: "/shanson/manager_connect/",
+			success: function(request, status, xhr, $form) {
+				if (get_cookie('manager_connect_result') === 'True') {
+					$('#manager_connect_done').css('left',0).show();
+					$('#manager_connect_popup').css('left',-9999).hide();
+				}
+			}
+		};
+
+		function get_cookie(cookie_name) {
+			var results = document.cookie.match ( '(^|;) ?' + cookie_name + '=([^;]*)(;|$)' );
+			if (results)
+				return (unescape(results[2]));
+			else
+				return null;
+		};
+
+		$("#manager_connect_form").ajaxForm(options);
+	</script>
+{% endblock %}

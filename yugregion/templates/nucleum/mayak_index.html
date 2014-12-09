@@ -1,0 +1,220 @@
+{% extends "mayak_layout.html" %}
+
+{% load static from staticfiles %}
+{% load thumbnails %}
+
+
+{% block headjs %}
+	<script type="text/javascript" src="{% static 'js/jquery-ui-1.9.2.custom.min.js' %}"></script>
+	<script type="text/javascript" src="//vk.com/js/api/openapi.js?105"></script>
+{% endblock %}
+
+{% block body %}
+{% comment %}
+      ___           ___           ___           ___                       ___           ___
+     /\  \         /\__\         /\  \         /\__\          ___        /\__\         /\  \
+    /::\  \       /:/  /        /::\  \       /:/  /         /\  \      /::|  |       /::\  \
+   /:/\:\  \     /:/  /        /:/\:\  \     /:/__/          \:\  \    /:|:|  |      /:/\:\  \
+  /::\~\:\  \   /:/  /  ___   /:/  \:\  \   /::\__\____      /::\__\  /:/|:|  |__   /:/  \:\  \
+ /:/\:\ \:\__\ /:/__/  /\__\ /:/__/ \:\__\ /:/\:::::\__\  __/:/\/__/ /:/ |:| /\__\ /:/__/_\:\__\
+ \/__\:\ \/__/ \:\  \ /:/  / \:\  \  \/__/ \/_|:|~~|~    /\/:/  /    \/__|:|/:/  / \:\  /\ \/__/
+      \:\__\    \:\  /:/  /   \:\  \          |:|  |     \::/__/         |:/:/  /   \:\ \:\__\
+       \/__/     \:\/:/  /     \:\  \         |:|  |      \:\__\         |::/  /     \:\/:/  /
+                  \::/  /       \:\__\        |:|  |       \/__/         /:/  /       \::/  /
+                   \/__/         \/__/         \|__|                     \/__/         \/__/
+      ___           ___           ___                       ___           ___
+     /\  \         /\  \         /\  \          ___        /\  \         /\  \
+    /::\  \       /::\  \       /::\  \        /\  \      /::\  \        \:\  \
+   /:/\:\  \     /:/\:\  \     /:/\:\  \       \:\  \    /:/\:\  \        \:\  \
+  /::\~\:\  \   /:/  \:\__\   /:/  \:\__\      /::\__\  /:/  \:\  \       /::\  \
+ /:/\:\ \:\__\ /:/__/ \:|__| /:/__/ \:|__|  __/:/\/__/ /:/__/ \:\__\     /:/\:\__\
+ \/__\:\/:/  / \:\  \ /:/  / \:\  \ /:/  / /\/:/  /    \:\  \  \/__/    /:/  \/__/
+      \::/  /   \:\  /:/  /   \:\  /:/  /  \::/__/      \:\  \         /:/  /
+      /:/  /     \:\/:/  /     \:\/:/  /    \:\__\       \:\  \        \/__/
+     /:/  /       \::/__/       \::/__/      \/__/        \:\__\
+     \/__/         ~~            ~~                        \/__/
+      ___           ___           ___           ___           ___
+     /\  \         /\  \         /\  \         /\  \         /\  \
+    /::\  \       /::\  \       /::\  \       /::\  \       /::\  \
+   /:/\:\  \     /:/\:\  \     /:/\:\  \     /:/\:\  \     /:/\:\  \
+  /:/  \:\  \   /:/  \:\  \   /:/  \:\__\   /::\~\:\  \   /::\~\:\  \
+ /:/__/ \:\__\ /:/__/ \:\__\ /:/__/ \:|__| /:/\:\ \:\__\ /:/\:\ \:\__\
+ \:\  \  \/__/ \:\  \ /:/  / \:\  \ /:/  / \:\~\:\ \/__/ \/_|::\/:/  /
+  \:\  \        \:\  /:/  /   \:\  /:/  /   \:\ \:\__\      |:|::/  /
+   \:\  \        \:\/:/  /     \:\/:/  /     \:\ \/__/      |:|\/__/
+    \:\__\        \::/  /       \::/__/       \:\__\        |:|  |
+     \/__/         \/__/         ~~            \/__/         \|__|
+{% endcomment %}
+	<div class="main-frame">
+		<div class="promo-gallery">
+			{% if promo_list %}
+				<div class="top-row">
+					<div class="program-box">
+						<ul class="title-list">
+							{% for promo in promo_list %}
+								<li{% if forloop.first %} class="active"{% endif %}>{{ promo.title|safe }}</li>
+							{% endfor %}
+						</ul>
+						<ul class="program-list"></ul>
+					</div>
+				</div>
+				<div class="gallery-list">
+					<ul>{% for promo in promo_list %}
+						<li>
+							<a href="{% if promo.program %}{{ promo.program.get_absolute_url }}{% else %}{{ promo.url }}{% endif %}">
+								<img src="{{ promo.photo.path|thumbnail:"888x384,crop" }}" width="888" height="384" alt="{{ promo.title|safe }}" />
+								<span class="shadow"></span>
+							</a>
+						</li>
+					{% endfor %}</ul>
+				</div>
+			{% endif %}
+			<div class="bottom-tools">
+				<ul class="tools">
+					{% if MAYAK_SHOW_VIDEO_BUTTON %}<li>
+						<a href="{% url mayak_nucleum_program_video_archive_archive_last %}">
+							<i class="icon">
+								<img src="{% static 'images/mayak_watch.png' %}" width="43" height="43" alt="Слушать" />
+							</i>
+							<span class="text">Смотреть</span>
+						</a>
+					</li>{% endif %}
+					<li>
+						<a href="{% url mayak_nucleum_programsarchive_archive_last %}">
+							<i class="icon">
+								<img src="{% static 'images/icon01.png' %}" width="43" height="43" alt="Слушать" />
+							</i>
+							<span class="text">Слушать</span>
+						</a>
+					</li>
+					{% if MAYAK_SHOW_CONSULTATION_BUTTON %}<li>
+						<a href="{% url mayak_consultation %}">
+							<center><i class="icon">
+								<img src="{% static 'images/icon02.png' %}" width="43" height="43" alt="Обсудить" />
+							</i></center>
+							<span class="text">Online<br />консультации</span>
+						</a>
+					</li>{% endif %}
+				</ul>
+{% comment %}
+2014.05.22
+				{% if promo_list %}
+					<div class="slide-switcher">
+						<a href="#" class="ui-corner-all ui-slider-handle" style="left:50%;"></a>
+					</div>
+				{% endif %}
+{% endcomment %}
+			</div>
+		</div><!--promo-gallery end-->
+		<div class="content-holder">
+			<div class="content">
+				{% if hospes_list|length %}
+					<h2>Гости радио</h2>
+					<div class="content-gallery" style="height: 241px;">
+						<div class="slide-list">
+							<ul style="margin-left: 0;">
+								{% for hospes in hospes_list %}
+								<li>
+									{% if hospes.photo %}
+									<div class="img-holder">
+										<img src="{{ hospes.photo.path|thumbnail:"213x204,crop" }}" width="213" height="204" alt="{{ hospes.name_surname|safe }}" />
+										<span class="shadow"></span>
+									</div>
+									{% endif %}
+									<div class="text-box">
+										<div class="name">{{ hospes.name_surname|safe }}</div>
+										<p>{{ hospes.text|safe }}</p>
+										<p>Эфир с участием: <br />{% if hospes.transmission.soundcloud %}<a href="{{ hospes.transmission.get_absolute_url }}">{{ hospes.transmission.program.title }} {{ hospes.transmission.date }}</a>{% else %}{{ hospes.transmission.program.title }} {{ hospes.transmission.date }}{% endif %}</p>
+									</div>
+								</li>
+								{% endfor %}
+							</ul>
+						</div>
+						<a href="#" class="next"></a>
+						<a href="#" class="prev"></a>
+					</div>
+				{% endif %}
+				<div class="news-list-box" style="position: relative;">
+					<div class="head">
+						<h2><a href="{% url mayak_news_list %}">Новости</a></h2>
+					</div>
+
+					<ul id="shanson_news_list" >{% for news in news_last|slice:':2' %}<li{% cycle '' ' class="mr0" ' %}>
+						{% if news.photo %}<img src="{{ news.photo.path|thumbnail:"290x180,crop" }}" width="290" height="180" >{% endif %}
+						<h3>{{ news.title|safe }}</h3>
+						<p class="date">{{ news.date }}</p>
+						<hr class="date_hr" />
+						<a href="{{ news.get_absolute_url }}" class="read_more" >Читать далее&gt;</a>
+					</li>{% endfor %}</ul>
+
+					<div class="scroll-pane horizontal-only">
+						<div class="scroll-item-holder">
+							{% regroup news_last|slice:'2:' by date as date_list %}
+							{% for date in date_list %}
+								<div class="scroll-item">
+									<div class="news-box">
+										<div class="date-head">
+											<div class="date-frame">{{ date.grouper }}</div>
+										</div>
+										<ul class="news-list">
+											{% for news in date.list %}
+												<li>
+													<div class="date">{{ news.time }}</div>
+													<div class="name"><a href="{{ news.get_absolute_url }}">{{ news.title }}</a></div>
+												</li>
+											{% endfor %}
+										</ul>
+									</div>
+								</div>
+							{% endfor %}
+						</div>
+					</div>
+				</div>
+			</div>
+
+{% comment %}
+	=================================
+	Правые блоки и баннеры вижу тут я
+	=================================
+{% endcomment %}
+			<div class="aside no-title">
+			{% if current_node.right_blocks.count %}
+				{% for right_block in current_node.right_blocks.all %}<div class="aside-box">
+						{% if right_block.photo %}
+							{% if right_block.url %}
+								<a href="{{ right_block.url }}" ><img src="{{ right_block.photo.url }}" alt="{{ right_block.description|safe|slice:"0:64" }}" /></a>
+							{% else %}
+								<img src="{{ right_block.photo.url }}" alt="{{ right_block.description|safe|slice:"0:64" }}" />
+							{% endif %}
+						{% endif %}
+				</div>{% endfor %}
+			{% endif %}
+
+				<div class="aside-box soc">
+					<!-- VK Widget -->
+					<div id="vk_groups" style="display: inline-block; margin-right: 23px;" ></div>
+
+					<script type="text/javascript">
+						VK.Widgets.Group("vk_groups", {mode: 0, width: "200", height: "300", color1: 'FFFFFF', color2: '2B587A', color3: '5B7FA6'}, 10989808);
+					</script>
+				</div>
+
+{% comment %}
+				<div class="aside-box soc">
+					<iframe src="//www.facebook.com/plugins/likebox.php?href=http%3A%2F%2Fwww.facebook.com%2Fmayak.rostov&amp;width=434&amp;height=250&amp;colorscheme=light&amp;show_faces=true&amp;header=true&amp;stream=false&amp;show_border=true&amp;appId=218106625035556" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:200px; height:300px; display: inline-block;" allowTransparency="true"></iframe>
+				</div>
+				<!--div class="fb-like-box" data-href="http://www.facebook.com/mayak.rostov" data-width="434" data-height="250" data-colorscheme="light" data-show-faces="true" data-header="true" data-stream="false" data-show-border="true"></div>
+
+				<div id="fb-root"></div>
+				<script>(function(d, s, id) {
+				  var js, fjs = d.getElementsByTagName(s)[0];
+				  if (d.getElementById(id)) return;
+				  js = d.createElement(s); js.id = id;
+				  js.src = "//connect.facebook.net/ru_RU/all.js#xfbml=1&appId=218106625035556";
+				  fjs.parentNode.insertBefore(js, fjs);
+				}(document, 'script', 'facebook-jssdk'));</script-->
+{% endcomment %}
+			</div>
+		</div><!--content-holder end-->
+	</div><!--main-frame end-->
+{% endblock %}

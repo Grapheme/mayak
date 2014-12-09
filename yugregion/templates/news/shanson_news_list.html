@@ -1,0 +1,56 @@
+{% extends "shanson_layout.html" %}
+{% load thumbnails %}
+
+{% block body %}<div class="main-frame"><div class="content-holder">
+	<div class="content">
+		<div class="block_breadcrumbs" >{% for crumb in breadcrumbs %}<a class="breadcrumbs" href="{{ crumb.get_absolute_url }}">{{ crumb|safe }}</a>{% if not forloop.last %}&nbsp;&rarr;&nbsp;{% endif %}{% endfor %}&nbsp;&rarr;&nbsp;{{ current_node.title|safe }}</div>
+		<div class="article-box">
+			<h2>{{ current_root_node|safe }}</h2>
+			<div class="scroll-pane horizontal-only">
+				<div class="scroll-item-holder">
+					<div class="news-list-container-small">
+						<ul id="shanson_news_list" >{% for news in news_list %}<li{% cycle '' ' class="mr0" ' %}>
+							<img src="{{ news.photo.path|thumbnail:"290x180,crop" }}" width="290" height="180" >
+							<h3>{{ news.title|safe }}</h3>
+							<p class="date">{{ news.date }}</p>
+							<hr class="date_hr" />
+							{% if news.anons %}<div class="anons" >{{ news.anons|safe }}</div>{% endif %}
+							<a href="{{ news.get_absolute_url }}" class="read_more" >Читать далее&gt;</a>
+						</li>{% endfor %}</ul>
+					</div>
+				</div>
+			</div>
+
+			<div class="pagination shanson">
+				<br>
+				<span class="step-links">
+					{% if news_list.has_previous %}<a class="prev" href="{% url shanson_news_list_page news_list.previous_page_number %}">< Предыдущая</a>{% endif %}
+
+					<span class="current">
+						{% if news_list.number != 1 and news_list.previous_page_number != 1 %}<a href="{% url shanson_news_list_page 1 %}">1</a> &nbsp;&hellip;&nbsp; {% endif %}
+						{% if news_list.has_previous %}<a href="{% url shanson_news_list_page news_list.previous_page_number %}">{{ news_list.previous_page_number }}</a>{% endif %}
+						<span class="curent">{{ news_list.number }}</span>
+						{% if news_list.has_next %}<a href="{% url shanson_news_list_page news_list.next_page_number %}">{{ news_list.next_page_number }}</a>{% endif %}
+						{% if news_list.paginator.num_pages != news_list.number and news_list.next_page_number != news_list.paginator.num_pages %} &nbsp;&hellip;&nbsp; <a href="{% url shanson_news_list_page news_list.paginator.num_pages %}">{{ news_list.paginator.num_pages }}</a>{% endif %}
+					</span>
+
+					{% if news_list.has_next %}<a class="next" href="{% url shanson_news_list_page news_list.next_page_number %}">Следующая ></a>{% endif %}
+				</span>
+			</div>
+		</div>
+	</div>
+{% comment %}
+=================================
+Правые блоки и баннеры вижу тут я
+=================================
+{% endcomment %}
+	<div class="aside no-title">{% if current_node.right_blocks.count %}
+		{% for right_block in current_node.right_blocks.all %}<div class="aside-box">{% if right_block.photo %}
+			{% if right_block.url %}
+				<a href="{{ right_block.url }}" ><img src="{{ right_block.photo.url }}" alt="{{ right_block.description|safe|slice:"0:64" }}" /></a>
+			{% else %}
+				<img src="{{ right_block.photo.url }}" alt="{{ right_block.description|safe|slice:"0:64" }}" />
+			{% endif %}
+		{% endif %}</div>{% endfor %}
+	{% endif %}</div>
+</div><!--content-holder end--></div>{% endblock %}

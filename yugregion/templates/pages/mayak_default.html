@@ -1,0 +1,23 @@
+{% extends "mayak_layout.html" %}
+
+{% load static from staticfiles %}
+
+{% block headjs %}
+	<script type="text/javascript" src="{% static 'js/jquery.jscrollpane.min.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/jquery.mousewheel.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/clear-form-fields.js' %}"></script>
+	<script type="text/javascript">
+		$(function(){$('.scroll-pane').jScrollPane({
+			horizontalDragMinWidth: 20
+		});});
+	</script>
+{% endblock %}
+
+{% block body %}
+	<div class="main-frame">
+		<div class="program-frame">
+			<div class="block_breadcrumbs" >{% for crumb in breadcrumbs %}<a class="breadcrumbs" href="{{ crumb.get_absolute_url }}">{{ crumb|safe }}</a>{% if not forloop.last %}&nbsp;&rarr;&nbsp;{% endif %}{% endfor %}&nbsp;&rarr;&nbsp;{{ current_node.title|safe }}</div>
+			<h2>{{ current_root_node|safe }}</h2>
+			{{ current_node.content|safe }}
+	</div>
+{% endblock %}

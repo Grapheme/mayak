@@ -1,0 +1,14 @@
+{% extends "mayak_blank_layout.html" %}
+
+
+{% block content %}
+	{{ current_node.teaser|safe }}
+
+	<form action="{% url radioanchorman_form %}" class="mayak_new_form" method="post" enctype="multipart/form-data" >
+		<ul>{{ form.as_ul }}</ul>
+		<input type="submit" value="Отправить">
+		{# <a href="{% url mayak_consultant consult.id %}" class="abort" >Отменить</a> #}
+	</form>
+
+	{{ current_node.content|safe }}
+{% endblock %}

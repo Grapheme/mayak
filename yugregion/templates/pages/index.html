@@ -1,0 +1,155 @@
+{% load staticfiles %}<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name='yandex-verification' content='5715a7d56d9545cf' />
+	<meta name="google-site-verification" content="-xNw2sBaYxeupLQ7K9nI5AIg39E9hHoJQkKQWC_wSc0" />
+	<title>Южный регион</title>
+	<link rel="stylesheet" href="{% static 'css/all.css' %}" type="text/css" />
+	<!--[if lt IE 8]><link rel="stylesheet" type="text/css" href="{% static 'css/ie.css' %}" media="screen"/><![endif]-->
+	<script type="text/javascript" src="{% static 'js/jquery-1.7.2.min.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/jquery.jscrollpane.min.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/jquery.mousewheel.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/clear-form-fields.js' %}"></script>
+	<script type="text/javascript">
+		$(function(){
+			$('.scroll-pane').jScrollPane({
+				horizontalDragMinWidth: 20
+			});
+		});
+	</script>
+	<script type="text/javascript">
+	  var _gaq = _gaq || [];
+	  _gaq.push(['_setAccount', 'UA-28795430-1']);
+	  _gaq.push(['_trackPageview']);
+	  (function() {
+		var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+	  })();
+	</script>
+	<style type="text/css">
+	.top-info {
+		width: 660px;
+		margin: 0 auto;
+		background: -moz-linear-gradient(top,  rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%); /* FF3.6+ */
+		background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,0)), color-stop(100%,rgba(255,255,255,1))); /* Chrome,Safari4+ */
+		background: -webkit-linear-gradient(top,  rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100%); /* Chrome10+,Safari5.1+ */
+		background: -o-linear-gradient(top,  rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100%); /* Opera 11.10+ */
+		background: -ms-linear-gradient(top,  rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100%); /* IE10+ */
+		background: linear-gradient(to bottom,  rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100%); /* W3C */
+		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', endColorstr='#ffffff',GradientType=0 ); /* IE6-9 */
+		padding: 22px 30px;
+		margin-top: 20px;
+		box-shadow: 1px 3px 4px 0px rgba(0, 0, 0, 0.17);
+	}
+
+	.top-info p {
+		font-size: 20px;
+		line-height: 24px;
+		margin: 0;
+	}
+
+	.choice-site {
+		padding-top: 60px;
+	}
+
+	.choice-info li {
+		display: block;
+		background: -moz-linear-gradient(top,  rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%); /* FF3.6+ */
+		background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,1)), color-stop(100%,rgba(255,255,255,0))); /* Chrome,Safari4+ */
+		background: -webkit-linear-gradient(top,  rgba(255,255,255,1) 0%,rgba(255,255,255,0) 100%); /* Chrome10+,Safari5.1+ */
+		background: -o-linear-gradient(top,  rgba(255,255,255,1) 0%,rgba(255,255,255,0) 100%); /* Opera 11.10+ */
+		background: -ms-linear-gradient(top,  rgba(255,255,255,1) 0%,rgba(255,255,255,0) 100%); /* IE10+ */
+		background: linear-gradient(to bottom,  rgba(255,255,255,1) 0%,rgba(255,255,255,0) 100%); /* W3C */
+		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#00ffffff',GradientType=0 ); /* IE6-9 */
+		box-shadow: 1px 1px 4px 0px rgba(0, 0, 0, 0.17);
+		width: 660px;
+		margin: 0 auto;
+		padding: 38px 30px;
+		display: none;
+	}
+
+	.choice-info li p {
+		margin: 0;
+		font-size: 20px;
+		line-height: 24px;
+	}
+
+	.choice-info {
+		list-style: none;
+		height: 240px;
+		margin: 0;
+		padding: 0;
+		margin-top: -5px;
+	}
+
+	.bottom {
+		margin: 0 auto;
+		/*padding-bottom: 60px;*/
+		width: 800px;
+	}
+
+	.bottom p {
+		font-size: 14px;
+		color: #4d4d4d;
+	}
+
+	.wrapper-holder {
+		min-height: 85%;
+	}
+	</style>
+</head>
+<body class="main-page">
+	{{ current_node.content|safe }}
+
+	<!-- Yandex.Metrika informer -->
+	<!--<a href="http://metrika.yandex.ru/stat/?id=22713715&amp;from=informer"
+	target="_blank" rel="nofollow"><img src="//bs.yandex.ru/informer/22713715/3_1_FFFFFFFF_EFEFEFFF_0_pageviews"
+	style="width:88px; height:31px; border:0; display: none;" alt="Яндекс.Метрика" title="Яндекс.Метрика: данные за сегодня (просмотры, визиты и уникальные посетители)" onclick="try{Ya.Metrika.informer({i:this,id:22713715,lang:'ru'});return false}catch(e){}"/></a>-->
+	<!-- /Yandex.Metrika informer -->
+
+	<!-- Yandex.Metrika counter -->
+	<script type="text/javascript">
+	(function (d, w, c) {
+		(w[c] = w[c] || []).push(function() {
+			try {
+				w.yaCounter22713715 = new Ya.Metrika({id:22713715,
+						clickmap:true,
+						trackLinks:true,
+						accurateTrackBounce:true});
+			} catch(e) { }
+		});
+
+		var n = d.getElementsByTagName("script")[0],
+			s = d.createElement("script"),
+			f = function () { n.parentNode.insertBefore(s, n); };
+		s.type = "text/javascript";
+		s.async = true;
+		s.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//mc.yandex.ru/metrika/watch.js";
+
+		if (w.opera == "[object Opera]") {
+			d.addEventListener("DOMContentLoaded", f, false);
+		} else { f(); }
+	})(document, window, "yandex_metrika_callbacks");
+	</script>
+	<noscript><div><img src="//mc.yandex.ru/watch/22713715" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+	<!-- /Yandex.Metrika counter -->
+</body>
+<script>
+	$(function(){
+		$('.choice-site li').hover(function(){
+			$('.choice-info li').slideUp('fast').eq($(this).index()).slideDown('fast');
+		}, function(){
+			$('.choice-info li').slideUp('fast')
+		});
+
+		var docHeight = $(document).height();
+	var winHeight = $(window).height();
+	if (docHeight <= winHeight) {
+		var wrapHeight = $('.wrapper-holder').height();
+		$('.prop').height(winHeight-wrapHeight);
+	}
+	});
+</script>
+</html>

@@ -1,0 +1,51 @@
+{% load dates %}
+{% load static from staticfiles %}
+
+
+<div class="prop"></div>
+<div class="footer-holder">
+	<div id="footer">
+		<ul class="social">
+			{# <li><a href="#"><img src="{% static 'images/tw.png' %}" width="85" height="38" alt="image description" /></a></li> #}
+			<li><a href="https://www.facebook.com/mayak.rostov"><img src="{% static 'images/fb.png' %}" width="77" height="39" alt="Facebook" /></a></li>
+			<li><a href="http://vk.com/mayakrostov" target="_blank"><img src="{% static 'images/vk.png' %}" width="85" height="38" alt="ВКонтакте" /></a></li>
+		</ul>
+		<address><nobr>Ростов-на-Дону</nobr>, пер.&nbsp;Кировский 40, А, Телефон <nobr>(863) 255-90-09</nobr></address>
+		<div class="copy">&copy; {% cop_year %}, Радио &laquo;Маяк Ростов&raquo;&nbsp;(12+), официальный сайт<br />
+		СМИ Мастерская радиотеатра (Эл&nbsp;&#8470;&nbsp;<nobr>ФС77-48460</nobr> от&nbsp;31 января 2012&nbsp;г. <nobr>ООО &laquo;Диадема&raquo;</nobr>)</div>
+
+		<!-- Yandex.Metrika informer -->
+		<!--<a href="http://metrika.yandex.ru/stat/?id=23429914&amp;from=informer"
+		target="_blank" rel="nofollow"><img src="//bs.yandex.ru/informer/23429914/3_1_FFFFFFFF_EFEFEFFF_0_pageviews"
+		style="width:88px; height:31px; border:0;" alt="Яндекс.Метрика" title="Яндекс.Метрика: данные за сегодня (просмотры, визиты и уникальные посетители)" onclick="try{Ya.Metrika.informer({i:this,id:23429914,lang:'ru'});return false}catch(e){}"/></a>-->
+		<!-- /Yandex.Metrika informer -->
+
+		<!-- Yandex.Metrika counter -->
+		<script type="text/javascript">
+		(function (d, w, c) {
+		    (w[c] = w[c] || []).push(function() {
+		        try {
+		            w.yaCounter23429914 = new Ya.Metrika({id:23429914,
+		                    webvisor:true,
+		                    clickmap:true,
+		                    trackLinks:true,
+		                    accurateTrackBounce:true});
+		        } catch(e) { }
+		    });
+
+		    var n = d.getElementsByTagName("script")[0],
+		        s = d.createElement("script"),
+		        f = function () { n.parentNode.insertBefore(s, n); };
+		    s.type = "text/javascript";
+		    s.async = true;
+		    s.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//mc.yandex.ru/metrika/watch.js";
+
+		    if (w.opera == "[object Opera]") {
+		        d.addEventListener("DOMContentLoaded", f, false);
+		    } else { f(); }
+		})(document, window, "yandex_metrika_callbacks");
+		</script>
+		<noscript><div><img src="//mc.yandex.ru/watch/23429914" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+		<!-- /Yandex.Metrika counter -->
+	</div>
+</div>

@@ -1,0 +1,41 @@
+{% extends "mayak_layout.html" %}
+
+{% load static from staticfiles %}
+{% load thumbnails %}
+
+{% block headjs %}
+	<script type="text/javascript" src="{% static 'js/jquery.jscrollpane.min.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/jquery.mousewheel.js' %}"></script>
+	<script type="text/javascript">
+		$(function(){$('.scroll-pane').jScrollPane({
+			horizontalDragMinWidth: 20
+		});});
+	</script>
+{% endblock %}
+
+{% block body %}
+	<div class="main-frame">
+		<div class="program-frame">
+			<div class="block_breadcrumbs" >{% for crumb in breadcrumbs %}<a class="breadcrumbs" href="{{ crumb.get_absolute_url }}">{{ crumb|safe }}</a>{% if not forloop.last %}&nbsp;&rarr;&nbsp;{% endif %}{% endfor %}&nbsp;&rarr;&nbsp;{{ research.title|safe }}</div>
+			<h2>{{ current_root_node.title|safe }}</h2>
+			<div class="content-holder">
+
+				{% include "includes/submenu.html" %}
+
+				<div class="content">
+					<div data-configid="{{ research.embed_code|safe }}" style="width: 639px; height: 452px;" class="issuuembed"></div><script type="text/javascript" src="//e.issuu.com/embed.js" async="true"></script>
+				</div>
+			</div>
+		</div>
+	</div><!--main-frame end-->
+{% endblock %}
+
+{% block popup %}
+	<div class="popup-holder" style="left:-0px; display: none;">
+		<div class="bg">&nbsp;</div>
+		<div class="popup image">
+			<a href="#" class="close"></a>
+			<img src="" width="570" height="380" alt="" />
+		</div>
+	</div>
+{% endblock %}

@@ -1,0 +1,163 @@
+{% extends "shanson_layout.html" %}
+
+{% load static from staticfiles %}
+{% load thumbnails shanson_promo %}
+
+
+{% block headjs %}{% endblock %}
+
+{% block body %}
+{% comment %}
+      ___           ___           ___           ___                       ___           ___
+     /\  \         /\__\         /\  \         /\__\          ___        /\__\         /\  \
+    /::\  \       /:/  /        /::\  \       /:/  /         /\  \      /::|  |       /::\  \
+   /:/\:\  \     /:/  /        /:/\:\  \     /:/__/          \:\  \    /:|:|  |      /:/\:\  \
+  /::\~\:\  \   /:/  /  ___   /:/  \:\  \   /::\__\____      /::\__\  /:/|:|  |__   /:/  \:\  \
+ /:/\:\ \:\__\ /:/__/  /\__\ /:/__/ \:\__\ /:/\:::::\__\  __/:/\/__/ /:/ |:| /\__\ /:/__/_\:\__\
+ \/__\:\ \/__/ \:\  \ /:/  / \:\  \  \/__/ \/_|:|~~|~    /\/:/  /    \/__|:|/:/  / \:\  /\ \/__/
+      \:\__\    \:\  /:/  /   \:\  \          |:|  |     \::/__/         |:/:/  /   \:\ \:\__\
+       \/__/     \:\/:/  /     \:\  \         |:|  |      \:\__\         |::/  /     \:\/:/  /
+                  \::/  /       \:\__\        |:|  |       \/__/         /:/  /       \::/  /
+                   \/__/         \/__/         \|__|                     \/__/         \/__/
+      ___           ___           ___                       ___           ___
+     /\  \         /\  \         /\  \          ___        /\  \         /\  \
+    /::\  \       /::\  \       /::\  \        /\  \      /::\  \        \:\  \
+   /:/\:\  \     /:/\:\  \     /:/\:\  \       \:\  \    /:/\:\  \        \:\  \
+  /::\~\:\  \   /:/  \:\__\   /:/  \:\__\      /::\__\  /:/  \:\  \       /::\  \
+ /:/\:\ \:\__\ /:/__/ \:|__| /:/__/ \:|__|  __/:/\/__/ /:/__/ \:\__\     /:/\:\__\
+ \/__\:\/:/  / \:\  \ /:/  / \:\  \ /:/  / /\/:/  /    \:\  \  \/__/    /:/  \/__/
+      \::/  /   \:\  /:/  /   \:\  /:/  /  \::/__/      \:\  \         /:/  /
+      /:/  /     \:\/:/  /     \:\/:/  /    \:\__\       \:\  \        \/__/
+     /:/  /       \::/__/       \::/__/      \/__/        \:\__\
+     \/__/         ~~            ~~                        \/__/
+      ___           ___           ___           ___           ___
+     /\  \         /\  \         /\  \         /\  \         /\  \
+    /::\  \       /::\  \       /::\  \       /::\  \       /::\  \
+   /:/\:\  \     /:/\:\  \     /:/\:\  \     /:/\:\  \     /:/\:\  \
+  /:/  \:\  \   /:/  \:\  \   /:/  \:\__\   /::\~\:\  \   /::\~\:\  \
+ /:/__/ \:\__\ /:/__/ \:\__\ /:/__/ \:|__| /:/\:\ \:\__\ /:/\:\ \:\__\
+ \:\  \  \/__/ \:\  \ /:/  / \:\  \ /:/  / \:\~\:\ \/__/ \/_|::\/:/  /
+  \:\  \        \:\  /:/  /   \:\  /:/  /   \:\ \:\__\      |:|::/  /
+   \:\  \        \:\/:/  /     \:\/:/  /     \:\ \/__/      |:|\/__/
+    \:\__\        \::/  /       \::/__/       \:\__\        |:|  |
+     \/__/         \/__/         ~~            \/__/         \|__|
+{% endcomment %}
+	<div class="main-frame">
+		<div>
+			<div class="content new-content inline-11" >
+				<div class="promo-gallery">
+					{% if promo_list %}
+						<div class="top-row"><div class="program-box">
+							<ul class="title-list">{% for promo in promo_list %}
+								<li{% if forloop.first %} class="active"{% endif %}>{{ promo.title|safe }}</li>
+							{% endfor %}</ul>
+							<ul class="program-list"></ul>
+						</div></div>
+						<div class="gallery-list"><ul>{% for promo in promo_list %}<li>
+							<a href="{% if promo.program %}{{ promo.program.get_absolute_url }}{% else %}{{ promo.url }}{% endif %}">
+								<img src="{{ promo.photo.path|thumbnail:"662x394,crop" }}" width="662" height="394" alt="{{ promo.title|safe }}" />
+								<span class="shadow"></span>
+							</a>
+						</li>{% endfor %}</ul></div>
+					{% endif %}
+				</div><!--promo-gallery end-->
+			</div>
+			<div class="aside new-aside inline-11">
+				<h2><a href="{% url shanson_listner_list %}">Наши слушатели</a></h2>
+				<div class="aside-box listners" >
+					{% for listner in listeners_list %}<a href="{{ listner.photo.path|thumbnail:"570x380,crop" }}" class="photo" >
+						<img src="{{ listner.photo.path|thumbnail:"96x96,crop" }}" width="96" height="96" alt="{{ listner }}" />
+					</a>{% endfor %}
+				</div>
+			</div>
+		</div>
+
+		<div class="bottom-tools new-bottom-tools" >
+			<a href="{% url shanson_nucleum_programsarchive_archive_last %}" class="listnen index-icon-button" >Слушать</a>
+		</div>
+
+		<div class="content-holder">
+			<div class="content">
+				{% if news_list %}<div class="news-list-container">
+					<div class="head">
+						<h2><a href="{% url shanson_news_list %}">Новости</a></h2>
+					</div>
+					<ul id="shanson_news_list" >{% for news in news_list %}<li{% cycle '' ' class="mr0" ' %}>
+						<img src="{{ news.photo.path|thumbnail:"290x180,crop" }}" width="290" height="180" >
+						<h3>{{ news.title|safe }}</h3>
+						<p class="date">{{ news.date }}</p>
+						<hr class="date_hr" />
+						{% if news.anons %}<div class="anons" >{{ news.anons|safe }}</div>{% endif %}
+						<a href="{{ news.get_absolute_url }}" class="read_more" >Читать далее&gt;</a>
+					</li>{% endfor %}</ul>
+				</div>{% endif %}
+				{% comment %}
+				<div class="news-list-box">
+					<div class="head">
+						<h2><a href="{% url show_hit_parade %}">Хит-парад «Шансон Года»</a></h2>
+					</div>
+					<div class="table-box">
+						<table>
+							<tbody>
+								<tr>
+									<th>Позиция</th>
+									<th>&nbsp;</th>
+									<th>Исполнитель</th>
+									<th>Песня</th>
+									<th class="num">Недель в хит-параде</th>
+									<th>Динамика</th>
+								</tr>
+								{% include 'includes/index_hitparad.html' %}
+							</tbody>
+						</table>
+					</div>
+				</div>
+				{% endcomment %}
+			</div>
+			<div class="aside mt42">
+			{% if current_node.right_blocks.count %}
+				{% for right_block in current_node.right_blocks.all %}<div class="aside-box">
+						{% if right_block.photo %}
+							{% if right_block.url %}
+								<a href="{{ right_block.url }}" ><img src="{{ right_block.photo.url }}" alt="{{ right_block.description|safe|slice:"0:64" }}" /></a>
+							{% else %}
+								<img src="{{ right_block.photo.url }}" alt="{{ right_block.description|safe|slice:"0:64" }}" />
+							{% endif %}
+						{% endif %}
+				</div>{% endfor %}
+			{% endif %}
+				<div class="aside-box soc">
+					<div id="ok_group_widget" ></div>
+					<script>
+					!function (d, id, did, st) {
+					  var js = d.createElement("script");
+					  js.src = "http://connect.ok.ru/connect.js";
+					  js.onload = js.onreadystatechange = function () {
+					  if (!this.readyState || this.readyState == "loaded" || this.readyState == "complete") {
+					    if (!this.executed) {
+					      this.executed = true;
+					      setTimeout(function () {
+					        OK.CONNECT.insertGroupWidget(id,did,st);
+					      }, 0);
+					    }
+					  }}
+					  d.documentElement.appendChild(js);
+					}(document,"ok_group_widget","52115131662405","{width:200,height:300}");
+					</script>
+				</div>
+			</div>
+		</div><!--content-holder end-->
+	</div><!--main-frame end-->
+{% endblock %}
+
+{% block popup %}
+	<div class="popup-holder" style="left:-0px; display: none;">
+		<div class="bg">&nbsp;</div>
+		<div class="popup image">
+			<a href="#" class="close"></a>
+			<a href="#" class="next"></a>
+			<a href="#" class="prev"></a>
+			<img src="" width="570" height="380" alt="" />
+		</div>
+	</div>
+{% endblock %}

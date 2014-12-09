@@ -1,0 +1,19 @@
+.month-list li {
+	display:inline;
+	zoom:1;
+}
+.choice-site li{
+	display:inline;
+	zoom:1;
+}
+.page404 .site-list li a span {
+	float:left;
+	margin-top: expression(this.parentNode.offsetHeight > this.offsetHeight ? ((this.parentNode.offsetHeight-this.offsetHeight)/2 + "px") : "0");
+}
+.img-list li{
+	display:inline;
+	zoom:1;
+}
+.news-box .date-head .date-frame{
+	display:inline;
+}

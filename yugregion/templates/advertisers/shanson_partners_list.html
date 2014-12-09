@@ -1,0 +1,28 @@
+{% extends "shanson_layout.html" %}
+
+{% load thumbnails %}
+
+{% block body %}
+	<div class="main-frame">
+		<div class="program-frame">
+			<div class="block_breadcrumbs" >{% for crumb in breadcrumbs %}<a class="breadcrumbs" href="{{ crumb.get_absolute_url }}">{{ crumb|safe }}</a>{% if not forloop.last %}&nbsp;&rarr;&nbsp;{% endif %}{% endfor %}&nbsp;&rarr;&nbsp;{{ current_node.title|safe }}</div>
+			<h2>{{ current_root_node.title|safe }}</h2>
+			<div class="content-holder">
+
+				{% include "includes/submenu.html" %}
+
+				<div class="content">
+					{% if partners_list|length %}
+						<ul class="partners">
+							{% for partner in partners_list %}
+								<li style="background: white url({{ partner.logo.path|thumbnail:'193x0,crop' }}) no-repeat center center;">
+									<!--<img src="{{ partner.logo.path|thumbnail:'193x0,crop' }}" alt="{{ partner.title|safe }}" />-->
+								</li>
+							{% endfor %}
+						</ul>
+					{% endif %}
+				</div>
+			</div>
+		</div>
+	</div><!--main-frame end-->
+{% endblock %}

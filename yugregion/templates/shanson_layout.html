@@ -1,0 +1,25 @@
+{% extends "shanson_base.html" %}
+
+{% load staticfiles %}
+
+
+{% block wrapper %}
+	<div id="header">
+		{% block stationchoise %}
+			<div class="head-row">
+				<ul class="nav-list">
+					<li><a href="/mayak/">Радио &laquo;Маяк Ростов&raquo;</a></li>
+					<li class="active"><a>Радио &laquo;Шансон-Ростов&raquo;</a></li>
+				</ul>
+			</div>
+		{% endblock %}
+
+		{% block menu %}
+		    {% include 'includes/shanson_navigation.html' %}
+		{% endblock %}
+	</div>
+
+	{% block body %}{% endblock %}
+
+	{% block footer %}{% include "includes/shanson_footer.html" %}{% endblock %}
+{% endblock %}

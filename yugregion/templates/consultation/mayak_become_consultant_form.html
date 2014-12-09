@@ -1,0 +1,21 @@
+{% extends "mayak_layout_2.html" %}
+
+
+{% block conlultant_content %}
+	{{ current_node.teaser|safe }}
+	<form action="{% url mayak_consultant_become %}" class="mayak_new_form" method="post" enctype="multipart/form-data" >
+		<ul>{{ form.as_ul }}</ul>
+		<input type="submit" value="Отправить">
+		<a href="{% url mayak_consultation %}" class="abort" >Отменить</a>
+	</form>
+	{# перенсти в текст страницы #}
+	<div class="form-description" >
+		<p class="title" >Правила работы консультации:</p>
+		<ol>
+			<li>Все вопросы пользователей, поступающие в&nbsp;рубрику &laquo;Консультации&raquo;, проходят модерацию. Модератор оценивает, насколько корректно сформулирован вопрос, и&nbsp;можно&nbsp;ли на&nbsp;него ответить заочно.</li>
+			<li>Если ваш вопрос не&nbsp;прошёл подерацию, вам на&nbsp;электронную почту поступает уведомление с&nbsp;объяснением причины. Вы&nbsp;можете ещё раз задать свой вопрос более корректно.</li>
+			<li>По&nbsp;умолчанию ваши персональные данные скрыты.</li>
+		</ol>
+	</div>
+	{{ current_node.content|safe }}
+{% endblock %}

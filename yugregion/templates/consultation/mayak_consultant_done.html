@@ -1,0 +1,10 @@
+{% extends "mayak_consultant_layout.html" %}
+
+
+{% block conlultant_content %}
+	<p class="ask_done">Ваш вопрос успешно отправлен.<br />
+	Через некоторое время на&nbsp;него ответят.</p>
+	<hr />
+	<a href="{% url mayak_consultation %}" class="new-button ask_done" >Вернуться в раздел</a>
+	<hr />
+{% endblock %}

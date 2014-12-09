@@ -1,0 +1,24 @@
+{% extends "mayak_base.html" %}
+
+
+{% block wrapper %}
+	<div id="header">
+		{% block stationchoise %}
+			<div class="head-row">
+				<ul class="nav-list">
+					<li><a href="/shanson/">Радио &laquo;Шансон-Ростов&raquo;</a></li>
+					<li class="active"><a>Радио &laquo;Маяк Ростов&raquo;</a></li>
+				</ul>
+			</div>
+		{% endblock %}
+
+		{% block menu %}
+			{% include 'includes/mayak_navigation.html' %}
+		{% endblock %}
+	</div>
+
+	{% block body %}{% endblock %}
+
+	{% block footer %}{% include "includes/mayak_footer.html" %}{% endblock %}
+
+{% endblock %}

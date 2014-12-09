@@ -1,0 +1,78 @@
+{% extends "shanson_layout.html" %}
+
+{% load static from staticfiles %}
+{% load thumbnails %}
+
+{% block headjs %}
+	<script type="text/javascript">$(function(){$('.scroll-pane').jScrollPane({horizontalDragMinWidth: 20});});</script>
+{% endblock %}
+
+{% block body %}
+	<div class="main-frame">
+		<div class="program-frame">
+			<div class="block_breadcrumbs" >{% for crumb in breadcrumbs %}<a class="breadcrumbs" href="{{ crumb.get_absolute_url }}">{{ crumb|safe }}</a>{% if not forloop.last %}&nbsp;&rarr;&nbsp;{% endif %}{% endfor %}&nbsp;&rarr;&nbsp;{{ program.title|safe }}</div>
+			<h3>{{ program.title|safe }}</h3>
+			<div class="description">{{ program.anons|safe }}</div>
+			<p>{{ program.schedule|safe }}</p>
+			<p>{{ program.description|safe }}</p>
+
+			{% for photo in program.get_photo_list %}
+				{% if forloop.first %}
+					<ul class="img-list item-photo-group">
+				{% endif %}
+					<li class="item-photo-hldr">
+						<a href="{{ photo.photo.path|thumbnail:"570x380,crop" }}" class="photo">
+							<img src="{{ photo.photo.path|thumbnail:"281x203,crop" }}" width="281" height="203" alt="{{ photo.photo.description|safe }}" />
+							<span class="shadow"></span>
+						</a>
+					</li>
+				{% if forloop.last %}
+					</ul>
+				{% endif %}
+			{% endfor %}
+
+		</div>
+		<div class="content-holder">
+			<div class="content">
+				<div id="mc-container"></div>
+				<script type="text/javascript">
+					var mcSite = '21993';
+					(function() {
+					    var mc = document.createElement('script');
+					    mc.type = 'text/javascript';
+					    mc.async = true;
+					    mc.src = '//cackle.me/mc.widget-min.js';
+					    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(mc);
+					})();
+				</script>
+				<a href="http://cackle.me" id="mc-link">система комментирования <b style="color:#4FA3DA">CACKL</b><b style="color:#F65077">E</b></a>
+			</div>
+			<div class="aside no-title">
+				<ul class="visual-list">
+					<p>Ведущие</p>
+					{% for staff in program.staff.all %}
+						<li>
+							<div class="visual-holder">
+								<img src="{{ staff.photo_min.path|thumbnail:"123x82,crop" }}" width="123" height="82" alt="{{ staff.name_surname|safe }}" />
+								<span class="shadow"></span>
+							</div>
+							<div class="name"><a href="{{ staff.get_absolute_url }}">{{ staff.name_surname|safe }}</a></div>
+						</li>
+					{% endfor %}
+				</ul>
+			</div>
+		</div>
+	</div><!--main-frame end-->
+{% endblock %}
+
+{% block popup %}
+	<div class="popup-holder" style="left:-0px; display: none;">
+		<div class="bg">&nbsp;</div>
+		<div class="popup image">
+			<a href="#" class="close"></a>
+			<a href="#" class="next"></a>
+			<a href="#" class="prev"></a>
+			<img src="" width="570" height="380" alt="" />
+		</div>
+	</div>
+{% endblock %}

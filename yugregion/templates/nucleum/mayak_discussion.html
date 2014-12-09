@@ -1,0 +1,37 @@
+{% extends "mayak_layout.html" %}
+
+{% load static from staticfiles %}
+{% load thumbnails %}
+
+{% block body %}
+	<div class="main-frame">
+		<div class="program-frame">
+			<div class="block_breadcrumbs" >{% for crumb in breadcrumbs %}<a class="breadcrumbs" href="{{ crumb.get_absolute_url }}">{{ crumb|safe }}</a>{% if not forloop.last %}&nbsp;&rarr;&nbsp;{% endif %}{% endfor %}&nbsp;&rarr;&nbsp;{{ current_node.title|safe }}</div>
+			<h2>{{ current_root_node|safe }}</h2>
+			<div class="content-gallery discussion" >
+				<div class="slide-list">
+					<div class="img-holder">{% if discussion.photo %}<img src="{{ discussion.photo.path|thumbnail:'crop,213x204' }}" alt="test" width="213" height="204" />{% endif %}</div>
+					<div class="text-box">
+						<div class="name">{{ discussion.title|safe }}</div>
+						<p>{{ discussion.tiser|safe }}</p>
+					</div>
+				</div>
+			</div>
+			<div class="discussion-text" >{{ discussion.text|safe }}</div>
+			<div class="content">
+				<div id="mc-container"></div>
+				<script type="text/javascript">
+					var mcSite = '21993';
+					(function() {
+					    var mc = document.createElement('script');
+					    mc.type = 'text/javascript';
+					    mc.async = true;
+					    mc.src = '//cackle.me/mc.widget-min.js';
+					    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(mc);
+					})();
+				</script>
+				<a href="http://cackle.me" id="mc-link">система комментирования <b style="color:#4FA3DA">CACKL</b><b style="color:#F65077">E</b></a>
+			</div>
+		</div>
+	</div>
+{% endblock %}

@@ -1,0 +1,55 @@
+{% load static from staticfiles %}<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru">
+<head>
+	{% block head %}
+		<title>{% block title %}{% if current_node.self_fields.title %}{{ current_node.self_fields.title|safe }}{% else %}{{ current_node.get_full_title|safe }}{% endif %}{% endblock %}</title>
+
+		<link rel="shortcut icon" href="{% static 'images/favicon-mayak.ico' %}" type="image/x-icon">
+
+		<link rel="stylesheet" href="{% static 'css/all.css' %}" type="text/css" />
+		<!--[if lt IE 8]><link rel="stylesheet" type="text/css" href="{% static 'css/ie.css' %}" media="screen"/><![endif]-->
+		{% block stylesheet %}{% endblock %}
+
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="description" content="{% block description %}{% if current_node.self_fields.description %}{{ current_node.self_fields.description }}{% else %}{{ current_node.content|safe|striptags|slice:"0:184" }}...{% endif %}{% endblock %}">
+		<meta name="keywords" content="{% block keywords %}{% if current_node.self_fields.keywords %}{{ current_node.self_fields.keywords }}{% else %}{{ SITE_NAME }},{{ current_node.get_full_keywords|cut:"&laquo;"|cut:"&raquo;" }}{% endif %}{% endblock %}">
+		<meta name='yandex-verification' content='71f894c30d0c0d03' />
+		<meta name="google-site-verification" content="-xNw2sBaYxeupLQ7K9nI5AIg39E9hHoJQkKQWC_wSc0" />
+		{% block meta %}{% endblock %}
+
+		{% block preheadjs %}{% endblock %}
+		<script type="text/javascript" src="{% static 'js/jquery-1.7.2.min.js' %}"></script>
+		<script type="text/javascript" src="{% static 'js/jquery.main.js'%}"></script>
+{% comment %}
+		snowflakes
+		<script type="text/javascript" src="{% static 'js/xmas.js'%}"></script>
+{% endcomment %}
+		<script type="text/javascript">
+			var _gaq = _gaq || [];
+			_gaq.push(['_setAccount', 'UA-28795430-1']);
+			_gaq.push(['_trackPageview']);
+			(function() {
+				var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+				ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+				var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+			})();
+		</script>
+		{% block headjs %}{% endblock %}
+
+		{% block extrahead %}{% endblock %}
+	{% endblock %}
+
+</head>
+<body class="mayak" >
+	<div class="wrapper-holder" {#style="background: url({% static 'images/mayak_top_bg.png' %}) repeat-x 0 top, url({% static 'images/mayak_bg.png' %}) repeat 0 0, url('/images/mayak-NY-bg/')" #}>
+		<div id="wrapper">
+			{% block wrapper %}{% endblock %}
+		</div>
+
+		{% block popup %}{% endblock %}
+
+		{% block jsfoot %}{% endblock %}
+
+	</div>
+</body>
+</html>

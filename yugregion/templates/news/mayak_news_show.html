@@ -1,0 +1,97 @@
+{% extends "mayak_layout.html" %}
+
+{% load thumbnails %}
+{% load static from staticfiles %}
+
+
+{% block title %}{% if current_node.self_fields.title %}{{ current_node.self_fields.title|safe }}{% else %}{{ current_node.get_full_title|safe }} — {{ news.title|safe|striptags }}{% endif %}{% endblock %}
+
+{% block headjs %}
+	<script type="text/javascript" src="{% static 'js/jquery.jscrollpane.min.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/jquery.mousewheel.js' %}"></script>
+	<script type="text/javascript">$(window).load(function(){$('.scroll-pane').jScrollPane({
+		verticalDragMinHeight: 20,
+		verticalDragMaxHeight: 120,
+		horizontalDragMinWidth: 20,
+		horizontalDragMaxWidth: 120
+	});});</script>
+
+	<!-- Put this script tag to the <head> of your page -->
+	<script type="text/javascript" src="//vk.com/js/api/openapi.js?105"></script>
+	<script type="text/javascript">VK.init({apiId: 4024985, onlyWidgets: true});</script>
+{% endblock %}
+
+{% block body %}<div class="main-frame"><div class="content-holder">
+	<div class="block_breadcrumbs" >{% for crumb in breadcrumbs %}<a class="breadcrumbs" href="{{ crumb.get_absolute_url }}">{{ crumb|safe }}</a>{% if not forloop.last %}&nbsp;&rarr;&nbsp;{% endif %}{% endfor %}&nbsp;&rarr;&nbsp;{{ news.title|safe }}</div>
+	<div class="content"><div class="article-box">
+		<h2>{{ news.title|safe }}</h2>
+		<div class="post-date">{{ news.date }} <span class="time">{{ news.time }}</span></div>
+		{% if news.photo %}
+		<div class="holder">
+			<div class="visual">
+				<img src="{{ news.photo.path|thumbnail:"627x405,crop" }}" width="627" height="405" alt="{{ news.title }}" />
+			</div>
+		</div>
+		{% endif %}
+		<p>{{ news.text|safe }}</p>
+
+{# vk like #}
+		<div id="vk_like"></div>
+		<script type="text/javascript">VK.Widgets.Like("vk_like", {type: "button", height: 20});</script>
+
+{# fb like #}
+		<div class="fb-like" data-href="http://{{ request.META.HTTP_HOST }}{{ request.path }}" data-width="108" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
+		<div id="fb-root"></div>
+		<script>
+			(function(d, s, id) {
+				var js, fjs = d.getElementsByTagName(s)[0];
+				if (d.getElementById(id)) return;
+				js = d.createElement(s); js.id = id;
+				js.src = "//connect.facebook.net/ru_RU/all.js#xfbml=1&appId=218106625035556";
+				fjs.parentNode.insertBefore(js, fjs);
+			}(document, 'script', 'facebook-jssdk'));
+		</script>
+		<style type="text/css">#vk_like, .fb-like {display: inline-block;}</style>
+
+{# soc coment - cockle #}
+		<div id="mc-container"></div>
+		<script type="text/javascript">
+			var mcSite = '21993';
+			(function() {
+				var mc = document.createElement('script');
+				mc.type = 'text/javascript';
+				mc.async = true;
+				mc.src = '//cackle.me/mc.widget-min.js';
+				(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(mc);
+			})();
+		</script>
+		<a href="http://cackle.me" id="mc-link">система комментирования <b style="color:#4FA3DA">CACKL</b><b style="color:#F65077">E</b></a>
+	</div></div>
+{% comment %}
+=================================
+Правые блоки и баннеры вижу тут я
+=================================
+{% endcomment %}
+	<div class="aside no-title">
+		{% if current_node.right_blocks.count %}{% for right_block in current_node.right_blocks.all %}<div class="aside-box">
+			{{ right_block.description|safe }}
+			{% if right_block.photo %}
+				{% if right_block.url %}
+					<a href="{{ right_block.url }}" ><img src="{{ right_block.photo.url }}" alt="{{ right_block.description|safe|slice:"0:64" }}" /></a>
+				{% else %}
+					<img src="{{ right_block.photo.url }}" alt="{{ right_block.description|safe|slice:"0:64" }}" />
+				{% endif %}
+			{% endif %}
+		</div>{% endfor %}{% endif %}
+		{% if day_news_list.count %}<div class="aside-box day-news">
+			<h3 class="day-news-h3" >Новости дня</h3>
+			<hr />
+			{% for day_news in day_news_list %}<div class="day_news_link" >
+				{{ day_news.time }}<br />
+				<a href="{{ day_news.get_absolute_url }}" >{{ day_news }}</a>
+			</div>{% endfor %}
+			<hr />
+			<a href="{% url mayak_day_news_more news.id %}" class="more_news" >к остальным новостям за день</a>
+		</div>{% endif %}
+	</div>
+</div><!--content-holder end--></div>{% endblock %}

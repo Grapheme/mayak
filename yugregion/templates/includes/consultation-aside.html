@@ -1,0 +1,23 @@
+{% load thumbnails static %}
+
+{% if subject_list.count %}<p>Тематика консультаций:</p>
+<div class="visual-list consultant">{% for sub in subject_list %}
+	{% if subject == sub %}
+		{{ sub.title|safe }}
+	{% else %}
+		<a href="{% if archive %}{{ sub.get_archive_url }}{% else %}{{ sub.get_absolute_url }}{% endif %}" >{{ sub.title|safe }}</a>
+	{% endif %}
+	{% if not forloop.last %}, {% endif %}
+{% endfor %}</div>{% endif %}
+{% if consultant_list.count %}<p>Консультанты</p>
+<ul class="visual-list consultant">{% for consultant in consultant_list %}<li>
+	<div class="visual-holder">
+		<img src="{{ consultant.photo_min.path|thumbnail:"123x82,crop" }}" width="123" height="82" alt="{{ consultant.name|safe }}" />
+		<span class="shadow"></span>
+	</div>
+	{% if consultant == consult %}
+		<div class="name">{{ consultant.name|safe }}</div>
+	{% else %}
+		<div class="name"><a href="{% if archive %}{{ consultant.get_archive_url }}{% else %}{{ consultant.get_absolute_url }}{% endif %}">{{ consultant.name|safe }}</a></div>
+	{% endif %}
+</li>{% endfor %}</ul>{% endif %}

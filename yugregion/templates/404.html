@@ -1,0 +1,49 @@
+{% load staticfiles %}<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Южный регион</title>
+    <link rel="stylesheet" href="{% static 'css/all.css' %}" type="text/css" />
+    <!--[if lt IE 8]><link rel="stylesheet" type="text/css" href="{% static 'css/ie.css' %}" media="screen"/><![endif]-->
+    <script type="text/javascript" src="{% static 'js/jquery-1.7.2.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/jquery.jscrollpane.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/jquery.mousewheel.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/clear-form-fields.js' %}"></script>
+    <script type="text/javascript">
+        $(function(){
+            $('.scroll-pane').jScrollPane({
+                horizontalDragMinWidth: 20
+            });
+        });
+    </script>
+</head>
+<body class="main-page">
+    <div class="wrapper-holder">
+        <div id="wrapper">
+			<div class="page404">
+				<div class="title">404</div>
+				<div class="description">Страница не найдена или не существует</div>
+				<p>Вернуться на сайт</p>
+				<ul class="site-list">
+					<li>
+						<a href="/mayak/">
+							<span class="img-holder">
+								<img src="{% static 'images/mayak_logo_107,5.png' %}" width="149" height="45" alt="image description" />
+							</span>
+							<span class="text">Радио &laquo;Маяк Ростов&raquo;</span>
+						</a>
+					</li>
+					<li>
+						<a href="/shanson/">
+							<span class="img-holder">
+								<img src="{% static 'images/logo_shanson.png' %}" width="149" height="69" alt="image description" />
+							</span>
+							<span class="text">Радио &laquo;Шансон-Ростов&raquo;</span>
+						</a>
+					</li>
+				</ul>
+			</div>
+        </div>
+    </div>
+</body>
+</html>

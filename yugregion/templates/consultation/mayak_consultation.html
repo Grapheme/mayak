@@ -1,0 +1,84 @@
+{% extends "mayak_layout.html" %}
+
+{% load thumbnails static %}
+
+
+{% block preheadjs %}{% endblock %}
+
+{% block headjs %}{% endblock %}
+
+{% block body %}<div class="main-frame">
+	<div class="content-holder">
+		<div class="content">
+			<div class="block_breadcrumbs" >
+			{% for crumb in breadcrumbs %}
+				{% if current_node != crumb %}<a class="breadcrumbs" href="{{ crumb.get_absolute_url }}">{{ crumb|safe }}</a>&nbsp;&rarr;&nbsp;{% endif %}
+			{% endfor %}
+			{% if subject %}
+				<a class="breadcrumbs" href="{{ current_node.get_absolute_url }}">{{ current_node.title|safe }}</a>
+				&nbsp;&rarr;&nbsp;{{ subject.title|safe }}
+			{% else %}
+				{{ current_node.title|safe }}
+			{% endif %}
+			</div>
+			<div class="article-box">
+				{% if subject %}
+					<h2>Консультации на тему "{{ subject }}"</h2>
+				{% else %}
+					<h2>{{ current_root_node|safe }}</h2>
+				{% endif %}
+				<hr />
+				<ul class="question_list" >{% for question in question_list %}<li class="question" >
+					<h3 class="title-name" >{{ question.name }}</h3>
+					<p class="asks" >спрашивает:</p>
+					<div class="text" >{{ question.message }}</div>
+					<div class="consultant" >
+						<div class="visual-holder">
+							<img src="{{ question.consiliario.photo_min.path|thumbnail:"123x82,crop" }}" width="123" height="82" alt="{{ question.consiliario.name|safe }}" />
+							<span class="shadow"></span>
+						</div>
+						<div class="name"><a href="{% if archive %}{{ question.consiliario.get_archive_url }}{% else %}{{ question.consiliario.get_absolute_url }}{% endif %}">{{ question.consiliario.name|safe }}</a></div>
+					</div>
+					<div class="answer" >{{ question.answer|safe }}</div>
+				<hr />
+				</li>{% endfor %}</ul>
+			</div>
+		</div>
+	{% comment %}
+	=================================
+	Правые блоки и баннеры вижу тут я
+	=================================
+	{% endcomment %}
+		<div class="aside no-title">
+			{% include 'includes/consultation-aside.html' %}
+
+			{% if current_node.right_blocks.count %}{% for right_block in current_node.right_blocks.all %}<div class="aside-box">{% if right_block.photo %}
+				{% if right_block.url %}
+					<a href="{{ right_block.url }}" ><img src="{{ right_block.photo.url }}" alt="{{ right_block.description|safe|slice:"0:64" }}" /></a>
+				{% else %}
+					<img src="{{ right_block.photo.url }}" alt="{{ right_block.description|safe|slice:"0:64" }}" />
+				{% endif %}
+			{% endif %}</div>{% endfor %}{% endif %}
+
+			<a href="{% url mayak_consultant_become %}" class="new-button mt-20" >Стать консультантом</a>
+			<a href="{% url mayak_consultation_archive %}" class="new-button mt-20" >Архив консультаций</a>
+		</div>
+	</div><!--content-holder end-->
+
+	{% if question_list.count %}<div class="pagination">
+		<br>
+		<span class="step-links">
+			{% if question_list.has_previous %}<a class="prev" href="{% url mayak_consultation_page question_list.previous_page_number %}">< Предыдущая</a>{% endif %}
+
+			<span class="current">
+				{% if question_list.number != 1 and question_list.previous_page_number != 1 %}<a href="{% url mayak_consultation_page 1 %}">1</a> &nbsp;&hellip;&nbsp; {% endif %}
+				{% if question_list.has_previous %}<a href="{% url mayak_consultation_page question_list.previous_page_number %}">{{ question_list.previous_page_number }}</a>{% endif %}
+				<span class="curent">{{ question_list.number }}</span>
+				{% if question_list.has_next %}<a href="{% url mayak_consultation_page question_list.next_page_number %}">{{ question_list.next_page_number }}</a>{% endif %}
+				{% if question_list.paginator.num_pages != question_list.number and question_list.next_page_number != question_list.paginator.num_pages %} &nbsp;&hellip;&nbsp; <a href="{% url mayak_consultation_page question_list.paginator.num_pages %}">{{ question_list.paginator.num_pages }}</a>{% endif %}
+			</span>
+
+			{% if question_list.has_next %}<a class="next" href="{% url mayak_consultation_page question_list.next_page_number %}">Следующая ></a>{% endif %}
+		</span>
+	</div>{% endif %}
+</div>{% endblock %}

@@ -1,0 +1,120 @@
+{% load static from staticfiles %}<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru">
+<head>
+	{% block head %}
+		<title>{% block title %}{% if current_node.self_fields.title %}{{ current_node.self_fields.title|safe }}{% else %}{{ current_node.get_full_title|safe }}{% endif %}{% endblock %}</title>
+
+		<link rel="shortcut icon" href="{% static 'images/favicon-shanson.ico' %}" type="image/x-icon">
+
+		<link rel="stylesheet" href="{% static 'css/all.css' %}" type="text/css" />
+		<!--[if lt IE 8]><link rel="stylesheet" type="text/css" href="{% static 'css/ie.css' %}" media="screen"/><![endif]-->
+		{% block stylesheet %}{% endblock %}
+
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="description" content="{% block description %}{% if current_node.self_fields.description %}{{ current_node.self_fields.description }}{% else %}{{ current_node.content|safe|striptags|slice:"0:184" }}...{% endif %}{% endblock %}">
+		<meta name="keywords" content="{% block keywords %}{% if current_node.self_fields.keywords %}{{ current_node.self_fields.keywords }}{% else %}{{ SITE_NAME|safe }},{{ current_node.get_full_keywords|cut:"&laquo;"|cut:"&raquo;" }}{% endif %}{% endblock %}">
+		<meta name='yandex-verification' content='71f894c30d0c0d03' />
+		<meta name="google-site-verification" content="-xNw2sBaYxeupLQ7K9nI5AIg39E9hHoJQkKQWC_wSc0" />
+		{% block meta %}{% endblock %}
+
+		<script type="text/javascript" src="{% static 'js/jquery-1.7.2.min.js'%}"></script>
+		<script type="text/javascript" src="{% static 'js/jquery.form.js'%}"></script>
+		<script type="text/javascript" src="{% static 'js/jquery.mousewheel.js'%}"></script>
+		<script type="text/javascript" src="{% static 'js/jquery.jscrollpane.min.js'%}"></script>
+		<script type="text/javascript" src="{% static 'js/jquery-ui-1.9.2.custom.min.js'%}"></script>
+		<script type="text/javascript" src="{% static 'js/jquery.main.js'%}"></script>
+{% comment %}
+		snowflakes
+		<script type="text/javascript" src="{% static 'js/xmas_shanson.js'%}"></script>
+{% endcomment %}
+		<script type="text/javascript">
+		  var _gaq = _gaq || [];
+		  _gaq.push(['_setAccount', 'UA-28795430-1']);
+		  _gaq.push(['_trackPageview']);
+		  (function() {
+		    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		  })();
+		</script>
+		{% block headjs %}{% endblock %}
+
+		<script type="text/javascript">
+			$(window).load(function(){$('.scroll-pane').jScrollPane({
+				verticalDragMinHeight: 20,
+				verticalDragMaxHeight: 120,
+				horizontalDragMinWidth: 20,
+				horizontalDragMaxWidth: 120
+			});});
+		</script>
+		{% block extrahead %}{% endblock %}
+
+	{% endblock %}
+</head>
+<body class="shanson{# spring #}" >
+<div class="wrapper-holder" {# Christmas Background style="background: url({% static 'images/shanson_top_bg.png' %}) repeat-x 0 top, url({% static 'images/shanson_bg.png' %}) repeat 0 0, url('/images/shanson-NY-bg/')" #}>
+	<div id="wrapper">
+		{% block wrapper %}{% endblock %}
+	</div>
+
+	<div class="popup-holder" style="left:-9999px;" id="order_song_form">
+		<div class="bg">&nbsp;</div>
+		<div class="popup send-form">
+			<div class="title-box">
+				<div class="title">Передать привет</div>
+				<p>Заказать привет с&nbsp;помощью SMS можно, отправив сообщение на&nbsp;короткий номер 5533. В&nbsp;начале сообщение укажите слово Ростов/Rostov.</p>
+				<div class="clarification">
+					<p><em>Стоимость услуги с&nbsp;НДС не&nbsp;более 30&nbsp;руб. Стоимость исходящего <nobr>SMS-сообщения</nobr> узнавайте у&nbsp;регионального оператора мобильной связи.</em></p>
+				</div>
+			</div>
+			<a href="#" class="close"></a>
+			<form action="{% url order_song %}" id="order_song" method="post" enctype="multipart/form-data" >
+				{% include 'feedback/order_song_form.html' %}
+			</form>
+		</div>
+	</div>
+
+	<div class="popup-holder" style="left:-9999px;" id="order_song_done">
+		<div class="bg">&nbsp;</div>
+		<div class="popup text">
+			<div class="title-box">
+				<div class="title">Заказать песню</div>
+			</div>
+
+			<a href="#" class="close"></a>
+			<div class="description">Спасибо! Ваша заявка принята.</div>
+			<p>Вы можете услышать заказанную песню в эфире радио «Шансон-Ростов» в ближайшей программе <a href="#">«Только для Вас»</a>, выходящей каждый будний день с 15:00 до 16:00.</p>
+		</div>
+	</div>
+
+	<script type="text/javascript">
+		var options = {
+			target: "#order_song",
+			url: "/shanson/order_song/",
+			success: function(request, status, xhr, $form) {
+				if (get_cookie('order_song_result') === 'True') {
+					$('#order_song_done').css('left',0).show();
+					$('.popup-holder:first').css('left',-9999).hide();
+				}
+			}
+		};
+
+		function get_cookie(cookie_name) {
+			var results = document.cookie.match ( '(^|;) ?' + cookie_name + '=([^;]*)(;|$)' );
+			if (results)
+				return (unescape(results[2]));
+			else
+				return null;
+		}
+		$("#order_song").ajaxForm(options);
+		function test(data) {
+			alert(data);
+		}
+	</script>
+    {% block jsfoot %}{% endblock %}
+
+    {% block popup %}{% endblock %}
+
+</div>
+</body>
+</html>

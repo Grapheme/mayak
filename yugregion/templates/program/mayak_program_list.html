@@ -1,0 +1,86 @@
+{% extends "mayak_layout.html" %}
+
+{% load static from staticfiles %}
+{% load thumbnails %}
+
+{% block headjs %}
+	<script type="text/javascript" src="{% static 'js/jquery.jscrollpane.min.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/jquery.mousewheel.js' %}"></script>
+	<script type="text/javascript">$(function(){$('.scroll-pane').jScrollPane({horizontalDragMinWidth: 20});});</script>
+{% endblock %}
+
+{% block body %}
+	{% regroup program_list by display as display_type %}
+
+	{% for program in display_type.0.list %}
+		<div class="main-frame">
+			{% if forloop.first %}
+			<div class="title-frame">
+				<div class="block_breadcrumbs" >{% for crumb in breadcrumbs %}<a class="breadcrumbs" href="{{ crumb.get_absolute_url }}">{{ crumb|safe }}</a>{% if not forloop.last %}&nbsp;&rarr;&nbsp;{% endif %}{% endfor %}&nbsp;&rarr;&nbsp;{{ current_node.title|safe }}</div>
+				<h2>{{ current_root_node|safe }}</h2>
+			</div>
+			{% endif %}
+			<div class="program-frame" id="{{ program.title }}">
+				<h3><a href="{{ program.get_absolute_url }}">{{ program.title|safe }}</a></h3>
+				<div class="description">{{ program.anons|safe }}</div>
+				<p>{{ program.schedule|safe }}</p>
+				{% for photo in program.get_photo_list %}
+					{% if forloop.first %}
+						<ul class="img-list item-photo-group">
+					{% endif %}
+						<li class="item-photo-hldr"><a href="{{ photo.photo.path|thumbnail:"570x380,crop" }}" class="photo">
+								<img src="{{ photo.photo.path|thumbnail:"281x203,crop" }}" width="281" height="203" alt="{{ photo.photo.description }}" />
+								<span class="shadow"></span>
+						</a></li>
+					{% if forloop.last %}
+						</ul>
+					{% endif %}
+				{% endfor %}
+				<a href="{{ program.get_absolute_url }}" class="new-button f-r" >Архив программы</a>
+				<p>Ведущие:{% for staff in program.staff.all %}{% if not forloop.first %},{% endif %} <a href="{{ staff.get_absolute_url }}" title="{{ staff.name_surname|safe }}">{{ staff.name_surname|safe }}</a>{% endfor %}</p>
+			</div>
+		</div><!--main-frame end-->
+	{% endfor %}
+
+	{% if display_type.1.list %}
+		<div class="main-frame">
+			<div class="program-frame{% if display_type.1.list|length > 2 %} three-col{% endif %}">
+				{% for program in display_type.1.list %}
+					<div class="col" id="{{ program.title }}">
+						<h3>{{ program.title|safe }}</h3>
+						{% with program.get_photo as photo %}
+							{% if photo %}
+								<div class="holder">
+									<div class="visual-frame">
+										<a href="{{ photo.photo.path|thumbnail:"570x380,crop" }}" class="photo">
+											{% if display_type.1.list|length > 2 %}
+												<img src="{{ photo.photo.path|thumbnail:"262x189,crop" }}" width="262" height="189" alt="{{ photo.photo.description }}" />
+											{% else %}
+												<img src="{{ photo.photo.path|thumbnail:"401x203,crop" }}" width="401" height="203" alt="{{ photo.photo.description }}" />
+											{% endif %}
+											<span class="shadow"></span>
+										</a>
+									</div>
+								</div>
+							{% endif %}
+						{% endwith %}
+						<p>{{ program.schedule|safe }}</p>
+						<p>Ведущие:{% for staff in program.staff.all %}{% if not forloop.first %},{% endif %} <a href="{{ staff.get_absolute_url }}" title="{{ staff.name_surname|safe }}">{{ staff.name_surname|safe }}</a>{% endfor %}</p>
+					</div>
+				{% endfor %}
+			</div>
+		</div><!--main-frame end-->
+	{% endif %}
+{% endblock %}
+
+{% block popup %}
+	<div class="popup-holder" style="left:-0px; display: none;">
+		<div class="bg">&nbsp;</div>
+		<div class="popup image">
+			<a href="#" class="close"></a>
+			<a href="#" class="next"></a>
+			<a href="#" class="prev"></a>
+			<img src="" width="570" height="380" alt="" />
+		</div>
+	</div>
+{% endblock %}

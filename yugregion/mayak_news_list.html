@@ -1,0 +1,170 @@
+{% extends "mayak_layout.html" %}
+
+{% block body %}
+	<div class="main-frame">
+		<div class="content-holder">
+			<div class="content">
+				<div class="article-box">
+					<h2>{{ current_root_node|safe }}</h2>
+					<div class="scroll-pane horizontal-only">
+						<div class="scroll-item-holder">
+							{% regroup news_list by date as date_list %}
+							{% for date in date_list %}
+								<div class="scroll-item">
+									<div class="news-box">
+										<div class="date-head">
+											<div class="date-frame">{{ date.grouper }}</div>
+										</div>
+										<ul class="news-list">
+											{% for news in date.list %}
+												<li>
+													<div class="date">{{ news.time }}</div>
+													<div class="name"><a href="{{ news.get_absolute_url }}">{{ news.title }}</a></div>
+												</li>
+											{% endfor %}
+										</ul>
+									</div>
+								</div>
+							{% endfor %}
+						</div>
+					</div>
+
+					<div class="pagination">
+					    <span class="step-links">
+						{% if news_list.has_previous %}
+					            <a href="{% url mayak_news_list_page news_list.previous_page_number %}">< Новее</a>
+					        {% endif %}
+						
+					        <span class="current">
+					            {% if news_list.has_previous %}<a href="{% url mayak_news_list_page news_list.previous_page_number %}">{{ news_list.previous_page_number }}</a>{% endif %}
+						    {{ news_list.number }}
+						    {% if news_list.has_next %}<a href="{% url mayak_news_list_page news_list.next_page_number %}">{{ news_list.next_page_number }}</a>{% endif %}
+						    {% if news_list.paginator.num_pages != news_list.number and news_list.next_page_number != news_list.paginator.num_pages %}....... {{ news_list.paginator.num_pages }}{% endif %}
+					        </span>
+						
+					        {% if news_list.has_next %}
+					            <a href="{% url mayak_news_list_page news_list.next_page_number %}">Старее ></a>
+					        {% endif %}
+					    </span>
+					</div>
+					{% comment %}
+					<div class="scroll-pane horizontal-only">
+						<div class="scroll-item-holder" style="width:1268px;">
+							<div class="scroll-item">
+								<div class="news-box">
+									<div class="date-head">
+										<div class="date-frame">6.09.2012</div>
+									</div>
+									<ul class="news-list">
+										<li>
+											<div class="date">18:00</div>
+											<div class="name"><a href="#">13 человек осуждены за нападение на фестивале «Торнадо»</a></div>
+										</li>
+										<li>
+											<div class="date">15:25</div>
+											<div class="name"><a href="#">В Саратовской области ищут подростков, жестоко избивших женщину на улице</a></div>
+										</li>
+										<li>
+											<div class="date">14:25</div>
+											<div class="name"><a href="#">Вынесен приговор организаторам беспорядков на рок-фестивале «Торнадо»</a></div>
+										</li>
+										<li>
+											<div class="date">9:55</div>
+											<div class="name"><a href="#">В Ростовской области проверяют информацию о стрельбе</a></div>
+										</li>
+									</ul>
+								</div>
+								<div class="news-box">
+									<div class="date-head">
+										<div class="date-frame">5.09.2012</div>
+									</div>
+									<ul class="news-list">
+										<li>
+											<div class="date">21:55</div>
+											<div class="name"><a href="#">В Морозовске женщина напала на судебного пристава</a></div>
+										</li>
+										<li>
+											<div class="date">19:05</div>
+											<div class="name"><a href="#">Жители Ростова скоро будут жить на огромной свалке из отходов </a></div>
+										</li>
+										<li>
+											<div class="date">16:05</div>
+											<div class="name"><a href="#">В Сальском районе ураганным ветром сорвало линии электропередач</a></div>
+										</li>
+										<li>
+											<div class="date">10:35</div>
+											<div class="name"><a href="#">Журнал «Тотошка» празднует юбилей в кругу преданных поклонников</a></div>
+										</li>
+										<li>
+											<div class="date">8:05</div>
+											<div class="name"><a href="#">Кто и зачем лоббирует выборы в Гордуму</a></div>
+										</li>
+									</ul>
+								</div>
+							</div>
+							<div class="scroll-item">
+								<div class="news-box">
+									<div class="date-head">
+										<div class="date-frame">16.09.2012</div>
+									</div>
+									<ul class="news-list">
+										<li>
+											<div class="date">18:00</div>
+											<div class="name"><a href="#">13 человек осуждены за нападение на фестивале «Торнадо»</a></div>
+										</li>
+										<li>
+											<div class="date">15:25</div>
+											<div class="name"><a href="#">В Саратовской области ищут подростков, жестоко избивших женщину на улице</a></div>
+										</li>
+										<li>
+											<div class="date">14:25</div>
+											<div class="name"><a href="#">Вынесен приговор организаторам беспорядков на рок-фестивале «Торнадо»</a></div>
+										</li>
+									</ul>
+								</div>
+								<div class="news-box">
+									<div class="date-head">
+										<div class="date-frame">15.09.2012</div>
+									</div>
+									<ul class="news-list">
+										<li>
+											<div class="date">21:55</div>
+											<div class="name"><a href="#">В Морозовске женщина напала на судебного пристава</a></div>
+										</li>
+										<li>
+											<div class="date">19:05</div>
+											<div class="name"><a href="#">Жители Ростова скоро будут жить на огромной свалке из отходов </a></div>
+										</li>
+										<li>
+											<div class="date">16:05</div>
+											<div class="name"><a href="#">В Сальском районе ураганным ветром сорвало линии электропередач</a></div>
+										</li>
+										<li>
+											<div class="date">10:35</div>
+											<div class="name"><a href="#">Журнал «Тотошка» празднует юбилей в кругу преданных поклонников</a></div>
+										</li>
+										<li>
+											<div class="date">8:05</div>
+											<div class="name"><a href="#">Кто и зачем лоббирует выборы в Гордуму</a></div>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+					{% endcomment %}
+				</div>
+			</div>
+{% comment %}
+	=================================
+	Правые блоки и баннеры вижу тут я
+	=================================
+{% endcomment %}
+			<div class="aside no-title">{% if current_node.right_blocks.count %}
+				<div class="aside-box">{% for right_block in current_node.right_blocks.all %}
+						{% if right_block.photo %}<img src="{{ right_block.photo.url }}" alt="{{ right_block.description|safe|slice:"0:64" }}" />{% endif %}
+				{% endfor %}</div>{% endif %}
+			</div>
+		</div><!--content-holder end-->
+	</div>
+{% endblock %}

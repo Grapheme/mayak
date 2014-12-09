@@ -1,0 +1,13 @@
+{% extends "mayak_consultant_layout.html" %}
+
+
+{% block conlultant_content %}
+	<ul class="question_list" >{% for question in question_list %}<li class="question" >
+		<h3 class="title-name" >{{ question.name }}</h3>
+		<p class="asks" >спрашивает:</p>
+		<div class="text" >{{ question.message }}</div>
+		<div class="answer" >{{ question.answer|safe }}</div>
+		<p class="consult-full_name" >{{ consult.full_name|safe }}</p>
+		<hr />
+	</li>{% endfor %}</ul>
+{% endblock %}

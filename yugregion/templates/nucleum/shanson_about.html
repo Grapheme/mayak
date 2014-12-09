@@ -1,0 +1,80 @@
+{% extends parent %}
+
+{% load static from staticfiles %}
+{% load thumbnails %}
+
+{% block headjs %}
+	<script type="text/javascript">$(window).load(function(){$('.scroll-pane').jScrollPane({
+				verticalDragMinHeight: 20,
+				verticalDragMaxHeight: 120,
+				horizontalDragMinWidth: 20,
+				horizontalDragMaxWidth: 120
+	});});</script>
+{% endblock %}
+
+{% block body %}
+	<div class="main-frame">
+		<div class="content-holder">
+			<div class="block_breadcrumbs" >{% for crumb in breadcrumbs %}<a class="breadcrumbs" href="{{ crumb.get_absolute_url }}">{{ crumb|safe }}</a>{% if not forloop.last %}&nbsp;&rarr;&nbsp;{% endif %}{% endfor %}&nbsp;&rarr;&nbsp;{{ current_node.title|safe }}</div>
+			<div class="content">
+				<div class="article-box">
+					<h2>{{ current_root_node|safe }}</h2>
+					{{ current_node.content|safe }}
+				</div>
+				{% if voices_list %}
+				<div class="article-box item-photo-group">
+					<h2 id="Голоса Эфира">Голоса эфира</h2>
+					{% for voice in voices_list %}
+						<div class="article-media item-photo-hldr">
+							{% if voice.photo_min %}
+								<div class="visual-holder">
+									<a href="{{ voice.photo.path|thumbnail:"570x380,crop" }}" class="photo">
+										<img src="{{ voice.photo_min.path|thumbnail:"207x138,crop" }}" width="207" height="138" alt="{{ voice.name_surname|safe }}" />
+										<span class="shadow"></span>
+									</a>
+								</div>
+							{% endif %}
+							<div class="article-media-text">
+								<div class="title-name">{{ voice.name_surname|safe }}</div>
+								{{ voice.text|safe }}
+								<p>Ведет {% if voice.programs.all|length == 1 %}программу{% else %}программы{% endif %}
+								{% for prog in voice.programs.all %}
+									<a href="{{ prog.get_absolute_url }}">{{ prog.title|safe }}</a>{% if forloop.last %}.{% else %},{% endif %}
+								{% endfor %}</p>
+								<a href="{{ voice.get_absolute_url }}" class="talk"><span>Общаемся с {{ voice.name_t }}</span></a>
+							</div>
+						</div>
+					{% endfor %}
+				</div>
+				{% endif %}
+			</div>
+			{% if press_list %}
+				<div class="aside">
+					<h2>В прессе</h2>
+					<ul class="file-list">
+						{% for press in press_list %}
+							<li>
+								<div class="name">{{ press.magazine|safe }}</div>
+								<div class="date">{{ press.date|safe }}</div>
+								<div class="file-name"><a href="{{ press.pdf.url }}">{{ press.headline|safe }}</a></div>
+								<div class="size">(PDF, {{ press.pdf.size|filesizeformat }})</div>
+							</li>
+						{% endfor %}
+					</ul>
+				</div>
+			{% endif %}
+		</div><!--content-holder end-->
+	</div><!--main-frame end-->
+{% endblock %}
+
+{% block popup %}
+	<div class="popup-holder" style="left:-0px; display: none;">
+		<div class="bg">&nbsp;</div>
+		<div class="popup image">
+			<a href="#" class="close"></a>
+			<a href="#" class="next"></a>
+			<a href="#" class="prev"></a>
+			<img src="" width="570" height="380" alt="" />
+		</div>
+	</div>
+{% endblock %}

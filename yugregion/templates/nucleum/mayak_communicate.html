@@ -1,0 +1,79 @@
+{% extends "mayak_layout.html" %}
+
+{% load static from staticfiles %}
+{% load thumbnails %}
+
+{% block headjs %}{% endblock %}
+
+{% block body %}
+	<div class="main-frame">
+		<div class="content-holder">
+			<div class="content">
+				<div class="block_breadcrumbs" >{% for crumb in breadcrumbs %}<a class="breadcrumbs" href="{{ crumb.get_absolute_url }}">{{ crumb|safe }}</a>{% if not forloop.last %}&nbsp;&rarr;&nbsp;{% endif %}{% endfor %}&nbsp;&rarr;&nbsp;{{ current_node.title|safe }}</div>
+				<div class="article-box">
+					<h2>{{ current_root_node|safe }} {{ voice.name_surname_t|safe }}</h2>
+					{{ current_node.content|safe }}
+				</div>
+				<div class="article-box">
+					<div class="article-media item-photo-group">
+						{% if voice.photo_min %}
+							<div class="visual-holder item-photo-hldr">
+								<a href="{{ voice.photo.path|thumbnail:"570x380,crop" }}" class="photo">
+									<img src="{{ voice.photo_min.path|thumbnail:"207x138,crop" }}" width="207" height="138" alt="{{ voice.name_surname|safe }}"  alt="{{ voice.name_surname|safe }}" />
+									<span class="shadow"></span>
+								</a>
+							</div>
+						{% endif %}
+						<div class="article-media-text">
+							<div class="title-name">{{ voice.name_surname|safe }}</div>
+							{{ voice.text|safe }}
+							<p>Ведет {% if voice.programs.all|length == 1 %}программу{% else %}программы{% endif %}
+							{% for prog in voice.programs.all %}
+								<a href="{{ prog.get_absolute_url }}#{{ prog.title }}">{{ prog.title|safe }}</a>{% if forloop.last %}.{% else %},{% endif %}
+							{% endfor %}</p>
+						</div>
+					</div>
+				</div>
+				<div id="mc-container"></div>
+				<script type="text/javascript">
+					var mcSite = '21993';
+					(function() {
+					    var mc = document.createElement('script');
+					    mc.type = 'text/javascript';
+					    mc.async = true;
+					    mc.src = '//cackle.me/mc.widget-min.js';
+					    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(mc);
+					})();
+				</script>
+				<a href="http://cackle.me" id="mc-link">система комментирования <b style="color:#4FA3DA">CACKL</b><b style="color:#F65077">E</b></a>
+			</div>
+			{% if voice_list %}
+				<div class="aside no-title">
+					<ul class="visual-list">
+						{% for unit in voice_list %}
+							<li>
+								<div class="visual-holder">
+									<img src="{{ unit.photo_min.path|thumbnail:"123x82,crop" }}" width="123" height="82" alt="{{ unit.name_surname|safe }}" />
+									<span class="shadow"></span>
+								</div>
+								<div class="name"><a href="{{ unit.get_absolute_url }}">{{ unit.name_surname|safe }}</a></div>
+							</li>
+						{% endfor %}
+					</ul>
+				</div>
+			{% endif %}
+		</div>
+	</div>
+{% endblock %}
+
+{% block popup %}
+	<div class="popup-holder" style="left:-0px; display: none;">
+		<div class="bg">&nbsp;</div>
+		<div class="popup image">
+			<a href="#" class="close"></a>
+			<a href="#" class="next"></a>
+			<a href="#" class="prev"></a>
+			<img src="" width="570" height="380" alt="" />
+		</div>
+	</div>
+{% endblock %}

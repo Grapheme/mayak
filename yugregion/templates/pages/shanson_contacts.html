@@ -1,0 +1,39 @@
+{% extends "shanson_layout.html" %}
+
+{% load static from staticfiles %}
+
+{% block headjs %}
+    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=true&language=ru"></script>
+{% endblock %}
+
+{% block body %}
+	<div class="main-frame">
+		<div class="program-frame">
+			<div class="block_breadcrumbs" >{% for crumb in breadcrumbs %}<a class="breadcrumbs" href="{{ crumb.get_absolute_url }}">{{ crumb|safe }}</a>{% if not forloop.last %}&nbsp;&rarr;&nbsp;{% endif %}{% endfor %}&nbsp;&rarr;&nbsp;{{ current_node.title|safe }}</div>
+			<h2>Контакты</h2>
+			<div class="map-box">
+				<div id="map_canvas" style="width: 867px; height: 383px;"></div>
+			</div>
+			{{ current_node.content|safe }}
+		</div>
+	</div><!--main-frame end-->
+{% endblock %}
+
+{% block jsfoot %}
+	<script type="text/javascript">
+	    var mapOptions = {
+	      center: new google.maps.LatLng(47.226621, 39.730189),
+	      zoom: 18,
+	      mapTypeId: google.maps.MapTypeId.ROADMAP
+	    };
+	    var map = new google.maps.Map(document.getElementById("map_canvas"),
+	        mapOptions);
+		var marker = new google.maps.Marker({
+		    position: new google.maps.LatLng(47.226621, 39.730189),
+		    map: map,
+		    title:"Радио «Шансон-Ростов»",
+		    draggable: false,
+		    animation: google.maps.Animation.DROP,
+		});
+	</script>
+{% endblock %}

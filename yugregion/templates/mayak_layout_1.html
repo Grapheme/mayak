@@ -1,0 +1,57 @@
+{% extends "mayak_layout.html" %}
+
+{% load thumbnails static %}
+
+
+{% block preheadjs %}{% endblock %}
+
+{% block headjs %}{% endblock %}
+
+{% block body %}<div class="main-frame">
+	<div class="content-holder">
+		<div class="content content-consultant">
+			<div class="block_breadcrumbs" >
+				{% for crumb in breadcrumbs %}
+					{% if current_node != crumb %}<a class="breadcrumbs" href="{{ crumb.get_absolute_url }}">{{ crumb|safe }}</a>&nbsp;&rarr;&nbsp;{% endif %}
+				{% endfor %}
+				{{ current_node.title|safe }}
+			</div>
+			<div class="article-box">
+				<h2>{{ current_node|safe }}</h2>
+				<hr />
+				{% block conlultant_content %}{% endblock %}
+			</div>
+		</div>
+{% comment %}
+=================================
+Правые блоки и баннеры вижу тут я
+=================================
+{% endcomment %}
+		<div class="aside no-title">
+			{# {% include 'includes/consultation-aside.html' %} #}
+
+			{% if current_node.right_blocks.count %}{% for right_block in current_node.right_blocks.all %}<div class="aside-box">{% if right_block.photo %}
+				{% if right_block.url %}
+					<a href="{{ right_block.url }}" ><img src="{{ right_block.photo.url }}" alt="{{ right_block.description|safe|slice:"0:64" }}" /></a>
+				{% else %}
+					<img src="{{ right_block.photo.url }}" alt="{{ right_block.description|safe|slice:"0:64" }}" />
+				{% endif %}
+			{% endif %}</div>{% endfor %}{% endif %}
+
+			{# <a href="{% url mayak_consultant_become %}" class="new-button mt-20" >Стать консультантом</a> #}
+			{# <a href="{% url mayak_consultation_archive %}" class="new-button mt-20" >Архив консультаций</a> #}
+		</div>
+	</div>
+</div>{% endblock %}
+
+{% block popup %}
+	<div class="popup-holder" style="left:-0px; display: none;">
+		<div class="bg">&nbsp;</div>
+		<div class="popup image">
+			<a href="#" class="close"></a>
+			<a href="#" class="next"></a>
+			<a href="#" class="prev"></a>
+			<img src="" width="570" height="380" alt="" />
+		</div>
+	</div>
+{% endblock %}

@@ -1,0 +1,55 @@
+{% extends "shanson_layout.html" %}
+
+{% load static from staticfiles %}
+{% load thumbnails shanson_promo %}
+
+{% block headjs %}
+{% endblock %}
+
+{% block body %}
+	<div class="main-frame">
+		<div class="news-list-box">
+			<div class="block_breadcrumbs" >{% for crumb in breadcrumbs %}<a class="breadcrumbs" href="{{ crumb.get_absolute_url }}">{{ crumb|safe }}</a>{% if not forloop.last %}&nbsp;&rarr;&nbsp;{% endif %}{% endfor %}&nbsp;&rarr;&nbsp;<nobr>Хит-парад</nobr> &laquo;Шансон Года&raquo;</div>
+			<div class="head">
+				<h2><nobr>Хит-парад</nobr> &laquo;Шансон Года&raquo;</h2>
+			</div>
+		</div>
+		<div class="content-holder">
+			<div class="content">
+				<div class="news-list-box">
+					<div class="table-box">
+						<table>
+							<tbody>
+								<tr>
+									<th>Позиция</th>
+									<th>&nbsp;</th>
+									<th>Исполнитель</th>
+									<th>Песня</th>
+									<th class="num">Недель в хит-параде</th>
+									<th>Динамика</th>
+								</tr>
+								{% include 'includes/hitparad.html' %}
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+			<div class="aside">{% if current_node.right_blocks.count %}
+				{% for right_block in current_node.right_blocks.all %}<div class="aside-box">
+						{% if right_block.photo %}
+							{% if right_block.url %}
+								<a href="{{ right_block.url }}" ><img src="{{ right_block.photo.url }}" alt="{{ right_block.description|safe|slice:"0:64" }}" /></a>
+							{% else %}
+								<img src="{{ right_block.photo.url }}" alt="{{ right_block.description|safe|slice:"0:64" }}" />
+							{% endif %}
+						{% endif %}
+				</div>{% endfor %}
+			{% endif %}</div>
+		</div><!--content-holder end-->
+		<p>Хит-парад ежедневно обновляется. Использованы данные хит-парада радио &laquo;Шансон&raquo;.
+На&nbsp;официальном <a href="http://www.chanson.ru/shansongoda/">сайте радио &laquo;Шансон&raquo;</a> можно ознакомиться с&nbsp;правилами голосования и&nbsp;проголосовать за&nbsp;любимого исполнителя.</p>
+	</div><!--main-frame end-->
+{% endblock %}
+
+{% block popup %}
+{% endblock %}
