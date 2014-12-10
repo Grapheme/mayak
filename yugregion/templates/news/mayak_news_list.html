@@ -34,6 +34,7 @@
 		console.log(links);
 
 		function available(date) {
+			console.log(date)
 			var values = [ date.getDate(), date.getMonth()+1 ];
 			for ( var id in values ) {values[ id ] = values[ id ].toString().replace( /^([0-9])$/, '0$1' );}
 			dmy = values[ 0 ]+'.'+values[ 1 ]+'.'+date.getFullYear()
@@ -54,6 +55,7 @@
 
 		function get_new(year, month) {
 			date = month.toString().replace( /^([0-9])$/, '0$1' )+'.'+year;
+			console.log(date)
 			$.ajax({
 				url: "{% url mayak_news_date_json %}",
 				data: { date:date },
@@ -75,6 +77,7 @@
 				onChangeMonthYear: get_new,
 				onSelect: show_archive
 			});
+			console.log('start!')
 		});
 	</script>
 {% endblock %}
