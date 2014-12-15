@@ -46,7 +46,8 @@ DATABASES = {
     'default': DATABASE_SQLITE
 }
 
-TIME_ZONE = 'Europe/Moscow'
+#TIME_ZONE = 'Europe/Moscow'
+TIME_ZONE = 'Europe/Minsk'
 
 DATE_INPUT_FORMATS = ('%d-%m-%Y',)
 
