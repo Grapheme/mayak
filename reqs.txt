@@ -7,5 +7,5 @@ lxml
 pytils
 South==0.7.6
 pillow
-django-ckeditor
+django-ckeditor==4.0.2
 django-tinymce==1.5.1b4

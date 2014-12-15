@@ -17,6 +17,36 @@ DISPLAY_CHOISE = (
     ('extra', u'Маленькое поле(внизу)'),
 )
 
+DYNAMIC_CHOISE = (
+    ('fa-angle-up', u'Вверх'),
+    ('fa-angle-down', u'Вниз'),
+    ('fa-angle-right', u'Без изменений'),
+)
+
+class HitParadRevision(PublishModel):
+    date = models.DateTimeField(auto_now_add=True, blank=True)
+    raw_html = models.TextField(u'Сырой html', blank=True, null=True)
+    
+    def __unicode__(self):
+        return u'Ревизия от %s' % (self.date)
+    
+    class Meta:
+        verbose_name = u'Ревизия хитпарада'
+        verbose_name_plural = u'Ревизии хитпарада'
+
+
+class HitParadItem(PublishModel):
+    revision = models.ForeignKey(HitParadRevision, verbose_name=u'Ревизия', related_name='revision_set', blank=True, null=True)
+    pos = models.PositiveSmallIntegerField(u'Позиция',  default=0, blank=True, null=True)
+    img = models.CharField(max_length=762, verbose_name=u'URL картинки', blank=True, null=True)
+    singer = models.CharField(max_length=254, verbose_name=u'Исполнитель', blank=True, null=True)
+    song = models.CharField(max_length=254, verbose_name=u'Песня', blank=True, null=True)
+    weeks = models.PositiveSmallIntegerField(u'Недель в хит-параде',  default=0, blank=True, null=True)
+    dynamic = models.CharField(u'Динамика', max_length=254, choices=DYNAMIC_CHOISE, default='none', blank=True, null=True)
+    
+    def __unicode__(self):
+        return u'%s - %s' % (self.singer, self.song)
+    
 class Programs(PublishModel):
     title = models.CharField(max_length=255, verbose_name=u'Название')
     anons = RichTextField(u'Анонс', blank=True)

@@ -12,19 +12,25 @@ from yugregion.shanson_nucleum.models import Programs, Staff, Press\
     , Promo, ProgramsArchive, Listeners
 from yugregion.shanson_news.models import News
 
+from models import HitParadItem, HitParadRevision
+
 
 def index(request):
     promo_list = Promo.objects.published()
     news_list = News.objects.published(date__lte=dt.date.today()).exclude(date=dt.date.today(), time__gte=dt.datetime.now().time())[:4]
     listeners_list = Listeners.objects.get_random()
+    hit_parade = HitParadRevision.objects.published().order_by('-id')[0]
     return render_to_response("nucleum/shanson_index.html", RequestContext(request, {
         'promo_list': promo_list,
         'news_list': news_list,
         'listeners_list': listeners_list,
+        'hit_parade': hit_parade,
     }))
 
 def hit_parade(request):
+    hit_parade = HitParadRevision.objects.published().order_by('-id')[0]
     return render_to_response("nucleum/shanson_hit_parade.html", RequestContext(request, {
+        'hit_parade': hit_parade,
     }))
 
 def program_list(request):

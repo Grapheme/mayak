@@ -1,0 +1,13 @@
+{% load static from staticfiles %}
+{% for item in hit_parade.revision_set.published %}
+{% if forloop.counter <= 5 %}
+<tr>
+    <td>{{ item.pos }}</td>
+    <td><span class="img-holder"><img src="{{ item.img }}" width="60" height="60" alt="Михаил Шуфутинский " /><span class="shadow"></span></span></td>
+    <td>{{ item.singer }}</td>
+    <td>{{ item.song }}</td>
+    <td class="num">{{ item.weeks }}</td>
+    <td><img src="/static/images/{{ item.dynamic }}.png" width="20" height="27" /></td>
+</tr>
+{% endif %}
+{% endfor %}

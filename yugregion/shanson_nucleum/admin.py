@@ -5,7 +5,7 @@ from django.contrib import admin
 
 from yugregion.shanson_nucleum.models import Staff, Programs\
     , ProgramsPhoto, ProgramsArchive, ProgramsArchivePhoto, Promo, Press\
-    , Listeners
+    , Listeners, HitParadRevision, HitParadItem
 
 class StaffAdmin(admin.ModelAdmin):
     fieldsets = (
@@ -81,6 +81,9 @@ admin.site.register(Staff, StaffAdmin)
 admin.site.register(Programs, ProgramsAdmin)
 admin.site.register(ProgramsArchive, ProgramsArchiveAdmin)
 admin.site.register(Listeners, ListenersAdmin)
+
+admin.site.register(HitParadRevision)
+admin.site.register(HitParadItem)
 
 if settings.DEBUG:
     admin.site.register(ProgramsPhoto)

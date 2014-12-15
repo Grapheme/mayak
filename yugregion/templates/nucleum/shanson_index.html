@@ -91,7 +91,6 @@
 						<a href="{{ news.get_absolute_url }}" class="read_more" >Читать далее&gt;</a>
 					</li>{% endfor %}</ul>
 				</div>{% endif %}
-				{% comment %}
 				<div class="news-list-box">
 					<div class="head">
 						<h2><a href="{% url show_hit_parade %}">Хит-парад «Шансон Года»</a></h2>
@@ -112,7 +111,6 @@
 						</table>
 					</div>
 				</div>
-				{% endcomment %}
 			</div>
 			<div class="aside mt42">
 			{% if current_node.right_blocks.count %}
