@@ -2,6 +2,6 @@
 
 cd /home/ugradio/
 source bin/activate
-python manage.py get_hitparad
+python manage.py get_hitparad_modern
 
 exit 0

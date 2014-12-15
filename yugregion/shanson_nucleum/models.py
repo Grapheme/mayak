@@ -47,6 +47,9 @@ class HitParadItem(PublishModel):
     def __unicode__(self):
         return u'%s - %s' % (self.singer, self.song)
     
+    class Meta:
+        ordering = ('pos',)
+    
 class Programs(PublishModel):
     title = models.CharField(max_length=255, verbose_name=u'Название')
     anons = RichTextField(u'Анонс', blank=True)
