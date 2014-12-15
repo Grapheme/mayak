@@ -36,7 +36,7 @@
 		};
 		$.datepicker.setDefaults($.datepicker.regional['ru']);
 
-		var links = { {% for archive_programm in program.programsarchive_set.published %}{% if not forloop.first %},{% endif %}"{{ archive_programm.date|date:'d.m.Y' }}": {"url":'{{ archive_programm.get_absolute_url }}',"text":'{{ archive_programm.caption|safe }}'}{% endfor %} };
+		var links = { {% for archive_programm in program.programsarchive_set.published %}{% if not forloop.first %},{% endif %}"{{ archive_programm.date|date:'d.m.Y' }}": {"url":'{{ archive_programm.get_absolute_url }}',"text":'{{ archive_programm.caption }}'}{% endfor %} };
 
 		function available(date) {
 			var values = [ date.getDate(), date.getMonth()+1 ];
