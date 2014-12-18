@@ -40,7 +40,11 @@
 	{% endblock %}
 
 </head>
-<body class="mayak" >
+<body class="mayak ny" >
+	<div style="position: absolute; width: 942px; left: 50%; margin-left: -471px;">
+		<img src="{% static 'images/vetka-ng.png' %}" style="position: absolute;left: -486px;z-index: 5;">
+		<img src="{% static 'images/vetka-ng.png' %}" style="position: absolute;right: -486px;z-index: 5;-moz-transform: scale(-1, 1);-webkit-transform: scale(-1, 1);-o-transform: scale(-1, 1);-ms-transform: scale(-1, 1);transform: scale(-1, 1);">
+	</div>
 	<div class="wrapper-holder" {#style="background: url({% static 'images/mayak_top_bg.png' %}) repeat-x 0 top, url({% static 'images/mayak_bg.png' %}) repeat 0 0, url('/images/mayak-NY-bg/')" #}>
 		<div id="wrapper">
 			{% block wrapper %}{% endblock %}

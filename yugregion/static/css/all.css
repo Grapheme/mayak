@@ -17,6 +17,9 @@ body {
 	background-repeat: repeat;
 	background-position: 46.5% 99.4%;
 }
+body.ny {
+	background-image:  url(../images/tile_light.png), url(../images/body-mayak.png);
+}
 body.spring {
 	background-image: url(../images/bg/mayak-spring-bg.png),
 					  url(../images/body-mayak.png);
@@ -28,6 +31,12 @@ body.spring {
 body.shanson {
 	position: relative;
 	background-image: url(../images/body-shanson.png);
+	background-repeat: repeat;
+	background-position: 38.37% 18px;
+}
+body.shanson.ny {
+	position: relative;
+	background-image:  url(../images/tile_dark.png), url(../images/body-shanson.png);
 	background-repeat: repeat;
 	background-position: 38.37% 18px;
 }

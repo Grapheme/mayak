@@ -51,8 +51,13 @@
 
 	{% endblock %}
 </head>
-<body class="shanson{# spring #}" >
+<body class="shanson ny{# spring #}" >
+	<div style="position: absolute; width: 942px; left: 50%; margin-left: -471px;">
+		<img src="{% static 'images/vetka-ng.png' %}" style="position: absolute;left: -486px;z-index: 5;">
+		<img src="{% static 'images/vetka-ng.png' %}" style="position: absolute;right: -486px;z-index: 5;-moz-transform: scale(-1, 1);-webkit-transform: scale(-1, 1);-o-transform: scale(-1, 1);-ms-transform: scale(-1, 1);transform: scale(-1, 1);">
+	</div>
 <div class="wrapper-holder" {# Christmas Background style="background: url({% static 'images/shanson_top_bg.png' %}) repeat-x 0 top, url({% static 'images/shanson_bg.png' %}) repeat 0 0, url('/images/shanson-NY-bg/')" #}>
+	</div>
 	<div id="wrapper">
 		{% block wrapper %}{% endblock %}
 	</div>
