@@ -81,7 +81,18 @@
 {% block body %}
 	<div class="main-frame">
 		<div class="program-frame">
-			<div class="block_breadcrumbs" >{% for crumb in breadcrumbs %}<a class="breadcrumbs" href="{{ crumb.get_absolute_url }}">{{ crumb|safe }}</a>{% if not forloop.last %}&nbsp;&rarr;&nbsp;{% endif %}{% endfor %}&nbsp;&rarr;&nbsp;{{ transfer.program.title|safe }}&nbsp;{{ transfer.date }}</div>
+			<div class="block_breadcrumbs" >
+				{% for crumb in breadcrumbs %}
+					<a class="breadcrumbs" href="{{ crumb.get_absolute_url }}">
+						{{ crumb|safe }}
+					</a>
+					{% if not forloop.last %}
+					&nbsp;&rarr;&nbsp;
+					{% endif %}
+				{% endfor %}
+				&nbsp;&rarr;&nbsp;
+				<a href="{{ transfer.program.get_absolute_url }}" class="breadcrumbs" >{{ transfer.program.title|safe }}</a>
+				&nbsp;&rarr;&nbsp;{{ transfer.date }}</div>
 			<h3>{{ transfer.program.title|safe }}</h3>
 			<h4>{{ transfer.caption|safe }}</h4>
 			<p>{{ transfer.date }}</p>

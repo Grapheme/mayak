@@ -41,7 +41,7 @@
 								{% for prog in voice.programs.all %}
 									<a href="{{ prog.get_absolute_url }}">{{ prog.title|safe }}</a>{% if forloop.last %}.{% else %},{% endif %}
 								{% endfor %}</p>
-								<a href="{{ voice.get_absolute_url }}" class="talk"><span>Общаемся с {{ voice.name_t }}</span></a>
+								{% comment %}<a href="{{ voice.get_absolute_url }}" class="talk"><span>Общаемся с {{ voice.name_t }}</span></a>{% endcomment %}
 							</div>
 						</div>
 					{% endfor %}
