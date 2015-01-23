@@ -2528,3 +2528,96 @@ ul.partners li {
 .inline-11:last-child {
 	margin-right: 0;
 }
+
+.widget .curency table tr td:last-child{
+	display: none;
+}
+.widget .curency table tr:nth-child(2){
+	display: none;
+}
+
+.widget .curency table tr:first-child{
+	display: none;
+}
+
+.widget .curency table tr td{
+	border: none;
+}
+
+.widget .curency table tr{
+	border: none;
+}
+
+.widget .curency a {
+	color: black;
+}
+.widget .curency {
+	float: right;
+}
+
+.widget .title {
+	float: left;
+}
+
+.widget {
+	float: right;
+	border-radius: 10px;
+	background-color: rgb(40, 40, 40);
+	/*width: 614px;*/
+	width: 300px;
+	height: 46px;
+	background: url(../images/main_mayak.jpg) repeat 50% 0;
+	font-size: 14px;
+	font-family: "Trebuchet MS";
+	color: rgb(0, 0, 0);
+	line-height: 2;
+	padding-top: 9px;
+	padding-right: 14px;
+	box-sizing: border-box;
+	box-shadow: 0px 0px 3px 1px #b6b6b6;
+	margin-bottom: 14px;
+	margin-right: 4px;
+}
+
+body.shanson .widget {
+	background: #eaeaea;
+	box-shadow: none;
+}
+
+.widget .curency table.up:after{
+	width: 8px;
+	height: 5px;
+	position: absolute;
+	display: block;
+	content: url(../images/ico-top.png);
+	z-index: 5;
+	top: -1px;
+	right: -14px;
+}
+.widget .curency table.down:after{
+	width: 8px;
+	height: 5px;
+	position: absolute;
+	display: block;
+	content: url(../images/ico-bottom.png);
+	z-index: 5;
+	top: -1px;
+	right: -14px;
+}
+
+.widget .curency table{
+	float: left;
+	border: none;
+	border-collapse: collapse;
+	margin-left: 8px;
+	position: relative;
+	margin-right: 14px;
+}
+
+.widget .weather{
+	display: none;
+}
+
+.clrfx {
+	clear: both;
+}

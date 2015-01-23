@@ -4,6 +4,7 @@ $(function(){
 	init(arrows);
 	// init(newstabs);
 	init(autoslide);
+	init(curencyWidget);
 });
 
 $(window).resize(function(){
@@ -19,6 +20,19 @@ $(window).load(function () {
 
 function init(f){
 	if(f)f();
+}
+
+function curencyWidget() {
+	var curency = $('.widget .curency table');
+	curency.each(function(){
+		var tds = $(this).find('tr').last().find('td');
+		if (tds.eq(1).text() - tds.eq(2).text()>0) {
+			$(this).addClass('down');
+		} else {
+			$(this).addClass('up');
+		}
+		tds.eq(1).text(parseFloat(tds.eq(1).text().replace(',','.')).toFixed(2));
+	})
 }
 
 function footertobottom() {

@@ -16,6 +16,72 @@
 			{% include 'includes/mayak_navigation.html' %}
 		{% endblock %}
 	</div>
+	<div class="widget">
+		<div class="weather">
+			<div class="title">
+				В Ростове-на-Дону:
+			</div>
+			<img scr="" class="visual">
+			<div class="temp"></div>
+			<div class="c">°C</div>
+		</div>
+		<div class="curency">
+			<div class="title">
+				Курсы валют ЦБ РФ:
+			</div>
+			<table>
+				<tr bgcolor="">
+				  <td height="10" valign="top" colspan="3">
+					<a href="http://www.forexpf.ru/" title="Курсы валют ЦБ РФ" target="_blank" class="forexpf_">
+					  Курсы валют ЦБ РФ
+					</a>
+				  </td>
+				</tr>
+				<tr bgcolor="">
+				  <td>Дата:</td>
+				  <td id="pfdt1">00:00</td>
+				  <td id="pfdt2">00:00</td>
+				</tr>
+				<tr bgcolor="">
+				  <td>
+					<a title="Курс доллара" target="_blank" class="forexpf_">
+					  $
+					</a>
+				  </td>
+				  <td id="usrutd">0.00</td>
+				  <td id="usrutm">0.00</td>
+				</tr>
+			</table>
+			<script src="http://informers.forexpf.ru/php/cbrf.php?id=01"></script>
+			<table>
+				<tr bgcolor="">
+				  <td height="10" valign="top" colspan="3">
+					<a href="http://www.forexpf.ru/" title="Курсы валют ЦБ РФ" target="_blank" class="forexpf_">
+					  Курсы валют ЦБ РФ
+					</a>
+				  </td>
+				</tr>
+				<tr bgcolor="">
+				  <td>Дата:</td>
+				  <td id="pfdt1">00:00</td>
+				  <td id="pfdt2">00:00</td>
+				</tr>
+				<tr bgcolor="">
+				  <td>
+					<a title="Курс Евро" target="_blank" class="forexpf_">
+					  €
+					</a>
+				  </td>
+				  <td id="eurutd">0.00</td>
+				  <td id="eurutm">0.00</td>
+				</tr>
+			</table>
+			<div class="clrfx"></div>
+			<script src="http://informers.forexpf.ru/php/cbrf.php?id=01"></script>
+		</div>
+		<div class="clrfx"></div>
+	</div>
+	<div class="clrfx"></div>
 
 	{% block body %}{% endblock %}
 
