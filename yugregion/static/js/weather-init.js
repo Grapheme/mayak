@@ -95,6 +95,7 @@ $(function() {
 			*/
 			console.log(weather);
 			var widget = $('.widget .weather');
+			widget.closest('.widget').removeClass('no-weather');
 			widget.find('.visual').attr('src', weather.thumbnail);
 			widget.find('.temp').text(weather.high+'...'+weather.low);
 		},

@@ -2553,18 +2553,33 @@ ul.partners li {
 }
 .widget .curency {
 	float: right;
+	border-left: 1px solid #aaa;
+	padding-left: 24px;
 }
 
 .widget .title {
 	float: left;
 }
 
+.widget.no-weather .weather {
+	display: none;
+}
+
+.widget.no-weather .curency {
+	padding-left: 0px;
+	border: none;
+}
+	
+.widget.no-weather {
+	width: 300px;
+}
+
 .widget {
 	float: right;
 	border-radius: 10px;
 	background-color: rgb(40, 40, 40);
-	/*width: 614px;*/
-	width: 300px;
+	width: 594px;
+	/*width: 300px;*/
 	height: 46px;
 	background: url(../images/main_mayak.jpg) repeat 50% 0;
 	font-size: 14px;
@@ -2573,6 +2588,7 @@ ul.partners li {
 	line-height: 2;
 	padding-top: 9px;
 	padding-right: 14px;
+	padding-left: 14px;
 	box-sizing: border-box;
 	box-shadow: 0px 0px 3px 1px #b6b6b6;
 	margin-bottom: 14px;
@@ -2614,8 +2630,29 @@ body.shanson .widget {
 	margin-right: 14px;
 }
 
-.widget .weather{
-	display: none;
+.widget .weather {
+	float: left;
+}
+.widget .weather .c {
+	display: inline-block;
+	vertical-align: middle;
+	margin-bottom: 5px;
+}
+
+.widget .weather .temp {
+	display: inline-block;
+	vertical-align: middle;
+	margin-bottom: 5px;
+}
+
+.widget .weather .visual{
+	/*display: none;*/
+	vertical-align: middle;
+	padding: 0;
+	margin: 0;
+	background: none;
+	float: none;
+	box-shadow: none;
 }
 
 .clrfx {
