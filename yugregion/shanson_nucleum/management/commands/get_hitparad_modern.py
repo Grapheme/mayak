@@ -23,13 +23,13 @@ class Command(BaseCommand):
     #sys.stderr = codecs.open("yugregion/get_hitparad.error", 'a', 'utf-8')
 
     def handle(self, *args, **options):
-        url = 'http://chanson.ru'
+        url = u'http://chanson.ru'
         times = options.get('t', 5)
         page = None
         for i in range(0, times):
             try:
                 print u'Получаем страницу http://chanson.ru/radio/program/hit-parade/'
-                page = html.parse('http://chanson.ru/radio/program/hit-parade/')
+                page = html.parse(u'http://chanson.ru/radio/program/hit-parade/')
                 break
             except:
                 if i >= times:
@@ -45,7 +45,7 @@ class Command(BaseCommand):
         raw_hitparad_list = page.getroot().find_class('d-chart-big-list').pop() #сохранить в ревизию
         if latest_rev:
             if latest_rev.raw_html == html.tostring(raw_hitparad_list):
-                print 'Хит-парад не изменился.'
+                print u'Хит-парад не изменился.'
                 return
         
         this_rev = HitParadRevision.objects.create(raw_html = html.tostring(raw_hitparad_list))
@@ -63,6 +63,6 @@ class Command(BaseCommand):
             singer = item.find_class('d-chart-big-name').pop().cssselect('div a').pop().text_content()
             weeks = item.find_class('d-chart-big-weeks').pop().cssselect('strong').pop().text_content()
             rev_item = HitParadItem.objects.create(revision = this_rev, pos=pos, dynamic=dynamic, img=img, song=song, singer=singer, weeks=weeks)
-        print 'Готово.'
+        print u'Готово.'
         
         
