@@ -41,7 +41,7 @@ class Command(BaseCommand):
             latest_rev = HitParadRevision.objects.all().order_by('-id')[0]
         except:
             latest_rev = None
-            
+        print page    
         raw_hitparad_list = page.getroot().find_class('d-chart-big-list').pop() #сохранить в ревизию
         if latest_rev:
             if latest_rev.raw_html == html.tostring(raw_hitparad_list):
