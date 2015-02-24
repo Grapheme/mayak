@@ -29,7 +29,7 @@ class Command(BaseCommand):
         for i in range(0, times):
             try:
                 print u'Получаем страницу http://chanson.ru/radio/program/hit-parade/'
-                page = html.parse(u'http://chanson.ru/radio/program/hit-parade/')
+                page = html.parse('http://chanson.ru/radio/program/hit-parade/')
                 print page    
                 break
             except:
