@@ -35,7 +35,7 @@ class Command(BaseCommand):
                 if i >= times:
                     print u'%d неудачных попыток' % i
                     raise error.GrabTimeoutError()
-                print u'Соединение с сервером увенчалось фиаско. Ошибка:'
+                #print u'Соединение с сервером увенчалось фиаско. Ошибка:'
                 print sys.exc_info()
         try:
             latest_rev = HitParadRevision.objects.all().order_by('-id')[0]
