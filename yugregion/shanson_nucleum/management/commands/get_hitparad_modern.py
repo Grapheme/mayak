@@ -28,7 +28,7 @@ class Command(BaseCommand):
         page = None
         for i in range(0, times):
             try:
-                print u'Получаем страницу http://chanson.ru/radio/program/hit-parade/'
+                #print u'Получаем страницу http://chanson.ru/radio/program/hit-parade/'
                 page = html.parse('http://chanson.ru/radio/program/hit-parade/')
                 print page    
                 break
@@ -63,6 +63,6 @@ class Command(BaseCommand):
             singer = item.find_class('d-chart-big-name').pop().cssselect('div a').pop().text_content()
             weeks = item.find_class('d-chart-big-weeks').pop().cssselect('strong').pop().text_content()
             rev_item = HitParadItem.objects.create(revision = this_rev, pos=pos, dynamic=dynamic, img=img, song=song, singer=singer, weeks=weeks)
-        print u'Готово.'
+        print u'Done.'
         
         
