@@ -24,7 +24,7 @@ urlpatterns = patterns(
         name='mayak_nucleum_programsarchive_archive'),
     url(r'^program/archive/last/$', 'program_archive',
         name='mayak_nucleum_programsarchive_archive_last'),
-    url(r'^program/video archive/', include('yugregion.mayak_video.urls')),
+    url(r'^program/video_archive/', include('yugregion.mayak_video.urls')),
 
     url(r'^news/', include('yugregion.mayak_news.urls')),
 
