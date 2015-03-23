@@ -94,7 +94,7 @@ class RememberAndProud(FormView):
     success_url = 'done/'
 
     def form_valid(self, form):
-        return super(RememberAndProudForm, self).form_valid(form)
+        return super(RememberAndProud, self).form_valid(form)
 
 class RadioanchormanDoneTemplate(TemplateView):
     template_name = 'nucleum/mayak_radioanchorman_done.html'
