@@ -4,7 +4,7 @@ from planb.settings import *
 
 SITE_NAME = u'Южный регион'
 
-DEFAULT_FROM_EMAIL = 'noreply@plan-b.ru'
+DEFAULT_FROM_EMAIL = 'noreply@ugradio.fm'
 SERVER_EMAIL = DEFAULT_FROM_EMAIL
 EMAIL_SUBJECT_PREFIX = u'[Южный регион] '
 
