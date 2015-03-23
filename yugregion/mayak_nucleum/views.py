@@ -87,5 +87,17 @@ class RadioanchormanForm(FormView):
         form.save(self.request.FILES['face'])
         return super(RadioanchormanForm, self).form_valid(form)
 
+
+class RememberAndProud(FormView):
+    template_name = 'nucleum/mayak_rememberandproud.html'
+    form_class = forms.RememberAndProudForm
+    success_url = 'done/'
+
+    def form_valid(self, form):
+        return super(RememberAndProudForm, self).form_valid(form)
+
 class RadioanchormanDoneTemplate(TemplateView):
     template_name = 'nucleum/mayak_radioanchorman_done.html'
+
+class RememberAndProudDoneTemplate(TemplateView):
+    template_name = 'nucleum/mayak_rememberandproud_done.html'

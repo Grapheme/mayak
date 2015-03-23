@@ -81,3 +81,28 @@ class RadioanchormanForm(forms.Form, BaseFeedbackForm):
             message.attach('.'.join([context['name'], image.name.split('.')[-1]]),
                            image.read(), image.content_type)
         message.send()
+
+
+class RememberAndProudForm(forms.Form, BaseFeedbackForm):
+    subject = settings.EMAIL_SUBJECT_PREFIX + u'Заявка: "Я помню! Я горжусь!'
+    template = 'feedback/rememberandproud_email.txt'
+    slug = 'rememberandproud'
+
+    name = CharField(label=u'ФИО', max_length=255)
+    about = CharField(label=u'О ком хочу рассказать', max_length=765)
+    connection = CharField(label=u'Как с вами связаться', max_length=255)
+    agree = forms.BooleanField(label=u'Я согласен на обработку данных', required=True, initial=True)
+
+    def save(self, image=None):
+        context = self.cleaned_data
+        text = render_to_string(self.template, Context(context))
+        message = EmailMessage(
+            self.subject,
+            text,
+            settings.DEFAULT_FROM_EMAIL,
+            self.get_recipients()
+        )
+        if image:
+            message.attach('.'.join([context['name'], image.name.split('.')[-1]]),
+                           image.read(), image.content_type)
+        message.send()

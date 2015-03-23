@@ -1865,6 +1865,12 @@ input {
 	font: 15px/18px 'PT Sans', Arial, Helvetica, sans-serif;
 }
 
+input[type="checkbox"] {
+	border: none;
+	box-shadow: none;
+	margin-top: 10px;
+}
+
 textarea {
 	background: url(../images/textarea-bg.png) no-repeat;
 	width: 344px;

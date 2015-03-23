@@ -2,7 +2,7 @@
 
 from django.conf.urls import patterns, url, include
 
-from yugregion.mayak_nucleum.views import RadioanchormanForm, RadioanchormanDoneTemplate
+from yugregion.mayak_nucleum.views import RadioanchormanForm, RadioanchormanDoneTemplate, RememberAndProud, RememberAndProudDoneTemplate
 
 
 urlpatterns = patterns(
@@ -34,6 +34,9 @@ urlpatterns = patterns(
         name='radioanchorman_form'),
     url(r'^radioanchorman_form/done/$', RadioanchormanDoneTemplate.as_view(),
         name='radioanchorman_form_done'),
+    url(r'^rememberandproud/$', RememberAndProud.as_view(),
+        name='rememberandproud_form'),
+    url(r'^rememberandproud/done/$', RememberAndProudDoneTemplate.as_view(), name='rememberandproud_form_done'),
 )
 
 urlpatterns += patterns(
