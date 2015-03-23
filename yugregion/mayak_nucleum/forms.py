@@ -96,13 +96,10 @@ class RememberAndProudForm(forms.Form, BaseFeedbackForm):
     def save(self, image=None):
         context = self.cleaned_data
         text = render_to_string(self.template, Context(context))
-        message = EmailMessage(
+        """message = EmailMessage(
             self.subject,
             text,
             settings.DEFAULT_FROM_EMAIL,
             self.get_recipients()
-        )
-        if image:
-            message.attach('.'.join([context['name'], image.name.split('.')[-1]]),
-                           image.read(), image.content_type)
-        message.send()
+        )"""
+        send_mail(self.subject, text, settings.DEFAULT_FROM_EMAIL, self.get_recipients())
