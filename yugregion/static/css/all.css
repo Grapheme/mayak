@@ -2664,3 +2664,7 @@ body.shanson .widget {
 .clrfx {
 	clear: both;
 }
+
+.remember-btn {
+	float: left;
+}
