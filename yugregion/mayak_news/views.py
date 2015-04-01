@@ -22,7 +22,7 @@ class Rss(Feed):
     description = "Свежие новости Ростова и области."
 
     def items(self):
-        return News.objects.order_by('date')[:50]
+        return News.objects.order_by('-date')[:50]
     
     def item_title(self, item):
         return item.title
