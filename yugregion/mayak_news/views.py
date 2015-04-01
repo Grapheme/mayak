@@ -22,7 +22,8 @@ class Rss(Feed):
     description = "Свежие новости Ростова и области."
 
     def items(self):
-        return News.objects.order_by('-date')[:50]
+        return News.objects.published(date__lte=dt.date.today()).\
+        exclude(date=dt.date.today(), time__gte=dt.datetime.now().time())[:50]
     
     def item_title(self, item):
         return item.title
