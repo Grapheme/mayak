@@ -70,7 +70,7 @@
 				</div>
 			{% endif %}
 			<div class="bottom-tools">
-				<ul class="tools">
+				{% comment %}<ul class="tools">
 					{% if MAYAK_SHOW_VIDEO_BUTTON %}<li>
 						<a href="{% url mayak_nucleum_program_video_archive_archive_last %}">
 							<i class="icon">
@@ -95,7 +95,7 @@
 							<span class="text">Online<br />консультации</span>
 						</a>
 					</li>{% endif %}
-				</ul>
+				</ul>{% endcomment %}
 {% comment %}
 2014.05.22
 				{% if promo_list %}

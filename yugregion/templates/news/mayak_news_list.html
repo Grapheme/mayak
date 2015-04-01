@@ -140,5 +140,9 @@
 				<img src="{{ right_block.photo.url }}" alt="{{ right_block.description|safe|slice:"0:64" }}" />
 			{% endif %}
 		{% endif %}</div>{% endfor %}{% endif %}
+		<a href="/mayak/news/rss" class="rss-btn">
+			<img src="{% static 'images/rss-image.png' %}">
+			<div class="title">RSS</div>
+		</a>
 	</div>
 </div><!--content-holder end--></div>{% endblock %}

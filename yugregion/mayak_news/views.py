@@ -8,6 +8,7 @@ from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, Http404, HttpResponse
 from django.shortcuts import render_to_response
 from django.template import RequestContext
+from django.contrib.syndication.views import Feed
 
 from yugregion.mayak_news.models import News
 from yugregion.mayak_news.utils import add_months
@@ -15,6 +16,20 @@ from yugregion.mayak_news.utils import add_months
 
 _paginate_per_page = 25
 
+class Rss(Feed):
+    title = "Радио «Маяк Ростов». Новости"
+    link = "/mayak/news/"
+    description = "Свежие новости Ростова и области."
+
+    def items(self):
+        return News.objects.order_by('date')[:50]
+    
+    def item_title(self, item):
+        return item.title
+
+    def item_description(self, item):
+        return item.text
+    
 def news_index(request, page=1):
     qs = News.objects.published(date__lte=dt.date.today()).\
         exclude(date=dt.date.today(), time__gte=dt.datetime.now().time())

@@ -93,5 +93,9 @@
 			<hr />
 			<a href="{% url mayak_day_news_more news.id %}" class="more_news" >к остальным новостям за день</a>
 		</div>{% endif %}
+		<a href="/mayak/news/rss" class="rss-btn">
+			<img src="{% static 'images/rss-image.png' %}">
+			<div class="title">RSS</div>
+		</a>
 	</div>
 </div><!--content-holder end--></div>{% endblock %}

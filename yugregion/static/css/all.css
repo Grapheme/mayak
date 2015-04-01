@@ -501,6 +501,7 @@ form, fieldset {
 .promo-gallery .bottom-tools {
 	width:100%;
 	position:relative;
+	margin-bottom: 30px;
 }
 .promo-gallery .bottom-tools:after{
 	display:block;
@@ -564,6 +565,24 @@ form, fieldset {
 }
 .bottom-tools .tools li a:hover .icon{
 	background-position:0 -79px;
+}
+.rss-btn {
+	text-decoration: none;
+	margin-top: 20px;
+	margin-left: 6px;
+	display: block;
+}
+
+.rss-btn .title{
+	display: inline-block;
+	vertical-align: middle;
+	text-decoration: underline;
+}
+
+.rss-btn img{
+	width: 24px;
+	display: inline-block;
+	vertical-align: middle;
 }
 .content-holder {
 	width:100%;
