@@ -70,7 +70,7 @@
 				</div>
 			{% endif %}
 			<div class="bottom-tools">
-				{% comment %}<ul class="tools">
+				<ul class="tools">
 					{% if MAYAK_SHOW_VIDEO_BUTTON %}<li>
 						<a href="{% url mayak_nucleum_program_video_archive_archive_last %}">
 							<i class="icon">
@@ -79,6 +79,7 @@
 							<span class="text">Смотреть</span>
 						</a>
 					</li>{% endif %}
+					{% comment %}
 					<li>
 						<a href="{% url mayak_nucleum_programsarchive_archive_last %}">
 							<i class="icon">
@@ -87,6 +88,7 @@
 							<span class="text">Слушать</span>
 						</a>
 					</li>
+					{% endcomment %}
 					{% if MAYAK_SHOW_CONSULTATION_BUTTON %}<li>
 						<a href="{% url mayak_consultation %}">
 							<center><i class="icon">
@@ -95,7 +97,7 @@
 							<span class="text">Online<br />консультации</span>
 						</a>
 					</li>{% endif %}
-				</ul>{% endcomment %}
+				</ul>
 {% comment %}
 2014.05.22
 				{% if promo_list %}
