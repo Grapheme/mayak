@@ -11,4 +11,20 @@
 	</form>
 
 	{{ current_node.content|safe }}
+		<br>
+		<br>
+		<br>
+		<h3>Истории</h3>
+	{% for transfer in audio_archive %}
+		<h4>{{ transfer.caption|safe }}</h4>
+		<p>{{ transfer.date }}</p>
+		
+		<div class="description">{{ transfer.description|safe }}</div>
+		{{ transfer.soundcloud|safe }}
+		<br>
+		<br>
+		<br>
+		<br>
+	{% endfor %}
+	
 {% endblock %}

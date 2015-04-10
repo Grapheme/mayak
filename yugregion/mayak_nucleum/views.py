@@ -92,7 +92,13 @@ class RememberAndProud(FormView):
     template_name = 'nucleum/mayak_rememberandproud.html'
     form_class = forms.RememberAndProudForm
     success_url = 'done/'
-
+    
+    def get_context_data(self, **kwargs):
+        context = super(RememberAndProud, self).get_context_data(**kwargs)
+        context['audio_archive'] = Programs.objects.get(id=14).programsarchive_set.published()
+        #14
+        return context
+    
     def form_valid(self, form):
         form.save()
         return super(RememberAndProud, self).form_valid(form)
