@@ -88,7 +88,25 @@ class Programs(PublishModel):
 
     def get_photo_list(self):
         return ProgramsPhoto.objects.filter(program=self)
+    
+    def get_earliest_archive_date_for_datapicer(self):
+        q = self.programsarchive_set.only('date').published().order_by('date')
+        if q.count():
+            earliest_date = q[0].date
+            today = dt.date.today()
+            alfa = earliest_date-today
+            return '%dd' % alfa.days
+        return None
 
+    def get_latest_archive_date_for_datapicer(self):
+        q = self.programsarchive_set.only('date').published()
+        if q.count():
+            latest_date = q.latest('date').date
+            today = dt.date.today()
+            alfa = latest_date-today
+            return '%dd' % alfa.days
+        return None
+    
     @models.permalink
     def get_absolute_url(self):
         return ('shanson_program_detail', [str(self.id)])

@@ -3,9 +3,81 @@
 {% load static from staticfiles %}
 {% load thumbnails %}
 
-{% block headjs %}
-	<script type="text/javascript">$(function(){$('.scroll-pane').jScrollPane({horizontalDragMinWidth: 20});});</script>
+{% block preheadjs %}
+	<link rel="stylesheet" href="{% static 'css/jquery.datapiker.css' %}">
 {% endblock %}
+
+{% block headjs %}
+	<script type="text/javascript" src="{% static 'js/jquery.jscrollpane.min.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/jquery.mousewheel.js' %}"></script>
+	<script src="{% static 'js/jquery-ui.js' %}"></script>
+	<script type="text/javascript" >
+		$(function() {
+			$('.scroll-pane').jScrollPane({ horizontalDragMinWidth: 20 });
+		});
+
+		$.datepicker.regional['ru'] = {
+			closeText: 'Закрыть',
+			prevText: '&#x3c;Пред',
+			nextText: 'След&#x3e;',
+			currentText: 'Сегодня',
+			monthNames: ['Январь','Февраль','Март','Апрель','Май','Июнь', 'Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'],
+			monthNamesShort: ['Янв','Фев','Мар','Апр','Май','Июн', 'Июл','Авг','Сен','Окт','Ноя','Дек'],
+			dayNames: ['воскресенье','понедельник','вторник','среда','четверг','пятница','суббота'],
+			dayNamesShort: ['вск','пнд','втр','срд','чтв','птн','сбт'],
+			dayNamesMin: ['Вс','Пн','Вт','Ср','Чт','Пт','Сб'],
+			weekHeader: 'Не',
+			dateFormat: 'dd.mm.yy',
+			firstDay: 1,
+			isRTL: false,
+			showMonthAfterYear: false,
+			yearSuffix: ''
+		};
+		$.datepicker.setDefaults($.datepicker.regional['ru']);
+
+		var links = { {% for archive_programm in program.programsarchive_set.published %}{% if not forloop.first %},{% endif %}"{{ archive_programm.date|date:'d.m.Y' }}": {"url":'{{ archive_programm.get_absolute_url }}',"text":'{{ archive_programm.caption }}'}{% endfor %} };
+
+		function available(date) {
+			var values = [ date.getDate(), date.getMonth()+1 ];
+			for ( var id in values ) {values[ id ] = values[ id ].toString().replace( /^([0-9])$/, '0$1' );}
+				dmy = values[ 0 ]+'.'+values[ 1 ]+'.'+date.getFullYear()
+			if ( links[dmy] && setDate == values[ 1 ]+'.'+date.getFullYear() ){
+				$('#archive_list').append('<p>'+dmy+'<br />'+links[dmy]["text"]+'<br /><a href="'+links[dmy]["url"]+'" >Послушать запись</a></p>');
+				return [true, "Available","Available"];
+			} else {
+				return [false,"unAvailable","unAvailable"];
+			}
+		}
+
+		function show_archive(date) {
+			if ( links[date] ) {
+				document.location.href = links[date]['url'];
+			}
+			return false
+		}
+
+		var setDate = "{% now 'm.Y' %}";
+
+		function clear_archive(year, month) {
+			setDate = month.toString().replace( /^([0-9])$/, '0$1' )+'.'+year;
+			$('#archive_list').text('')
+		}
+
+		$(function() {
+			$( "#datepicker" ).datepicker({
+				changeYear: true,
+				minDate: "{{ program.get_earliest_archive_date_for_datapicer }}",
+				maxDate: "{{ program.get_latest_archive_date_for_datapicer }}",
+				beforeShowDay: available,
+				onChangeMonthYear: clear_archive,
+				onSelect: show_archive
+			});
+			$( "#datepicker .ui-datepicker-prev" ).click();
+			$( "#datepicker .ui-datepicker-next" ).click();
+		});
+	</script>
+{% endblock %}
+
 
 {% block body %}
 	<div class="main-frame">
@@ -34,6 +106,13 @@
 		</div>
 		<div class="content-holder">
 			<div class="content">
+				<div class="archive" >
+					<div class="title">Архив программы</div>
+					<hr calss="hr_datepicker" />
+					<div id="datepicker" ></div>
+					<div id="archive_list" ></div>
+				</div>
+
 				<div id="mc-container"></div>
 				<script type="text/javascript">
 					var mcSite = '21993';
