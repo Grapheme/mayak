@@ -62,7 +62,7 @@ CONSTANCE_SUPERUSER_ONLY = False
 # CONSTANCE_DATABASE_CACHE_BACKEND = 'default'
 # CONSTANCE_DATABASE_PREFIX = 'constance:yugregion:'
 
-ALLOWED_HOSTS = ['178.62.105.65', 'ugradio.fm']
+ALLOWED_HOSTS = ['178.62.105.65', 'ugradio.fm', 'www.ugradio.fm']
 
 try:
     from local_settings import *
