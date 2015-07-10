@@ -62,6 +62,13 @@ class Command(BaseCommand):
             song = item.find_class('d-chart-big-name').pop().cssselect('strong a').pop().text_content()
             singer = item.find_class('d-chart-big-name').pop().cssselect('div a').pop().text_content()
             weeks = item.find_class('d-chart-big-weeks').pop().cssselect('strong').pop().text_content()
+            '''print this_rev
+            print pos
+            print dynamic
+            print img
+            print song
+            print singer
+            print weeks'''
             rev_item = HitParadItem.objects.create(revision = this_rev, pos=pos, dynamic=dynamic, img=img, song=song, singer=singer, weeks=weeks)
         print u'Done.'
         
