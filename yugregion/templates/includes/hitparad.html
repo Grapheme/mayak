@@ -6,6 +6,12 @@
     <td>{{ item.singer }}</td>
     <td>{{ item.song }}</td>
     <td class="num">{{ item.weeks }}</td>
+    {% if item.dynamic == "NEW" %}
+    <td></td>
+    {% elif not item.dynamic %}
+    <td><img src="/static/images/old.png" width="20" height="27" /></td>
+    {% else %}
     <td><img src="/static/images/{{ item.dynamic }}.png" width="20" height="27" /></td>
+    {% endif %}
 </tr>
 {% endfor %}

@@ -23,14 +23,13 @@ class Command(BaseCommand):
     #sys.stderr = codecs.open("yugregion/get_hitparad.error", 'a', 'utf-8')
 
     def handle(self, *args, **options):
-        url = u'http://chanson.ru'
+        url = u'http://radioshanson.fm'
         times = options.get('t', 5)
         page = None
         for i in range(0, times):
             try:
                 #print u'Получаем страницу http://chanson.ru/radio/program/hit-parade/'
-                page = html.parse('http://chanson.ru/radio/program/hit-parade/')
-                print page    
+                page = html.parse('http://radioshanson.fm/hit-parade/index/')
                 break
             except:
                 if i >= times:
@@ -42,7 +41,7 @@ class Command(BaseCommand):
             latest_rev = HitParadRevision.objects.all().order_by('-id')[0]
         except:
             latest_rev = None
-        raw_hitparad_list = page.getroot().find_class('d-chart-big-list').pop() #сохранить в ревизию
+        raw_hitparad_list = page.getroot().find_class('hit-parade-result').pop() #сохранить в ревизию
         if latest_rev:
             if latest_rev.raw_html == html.tostring(raw_hitparad_list):
                 print u'Хит-парад не изменился.'
@@ -50,18 +49,24 @@ class Command(BaseCommand):
         
         this_rev = HitParadRevision.objects.create(raw_html = html.tostring(raw_hitparad_list))
             
-        hitparad_list = raw_hitparad_list.getchildren()[0:12]
+        hitparad_list = raw_hitparad_list.cssselect('tbody tr:not(.spacing)')[0:12]
         for item in hitparad_list:
-            pos = item.find_class('d-chart-big-pos').pop().cssselect('strong').pop().text_content()
-            dynamic = item.find_class('d-chart-big-pos').pop().cssselect('i').pop().get('class').split(' ')[1]
-            img = item.find_class('d-chart-big-img').pop().cssselect('img').pop().get('src')
+            pos = item.cssselect('td')[0].text.strip()
+            try:
+              dynamic = item.cssselect('td')[0].cssselect('img')[0].get('alt').strip()
+            except:
+              try:
+                dynamic = item.cssselect('td')[0].cssselect('span')[0].text_content().strip()
+              except:
+                dynamic = ''
+            img = item.cssselect('td.title')[0].cssselect('img')[0].get('src')
             if img.split('//')[0]=='':
                 img = 'http:' + img
             else:
                 img = url + img
-            song = item.find_class('d-chart-big-name').pop().cssselect('strong a').pop().text_content()
-            singer = item.find_class('d-chart-big-name').pop().cssselect('div a').pop().text_content()
-            weeks = item.find_class('d-chart-big-weeks').pop().cssselect('strong').pop().text_content()
+            song = item.cssselect('td.title')[0].cssselect('span')[1].text.strip()
+            singer = item.cssselect('td.title')[0].cssselect('span small')[0].text_content().strip()
+            weeks = item.cssselect('td.icon')[0].text_content().strip()
             '''print this_rev
             print pos
             print dynamic
